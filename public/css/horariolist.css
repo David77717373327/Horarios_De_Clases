@@ -1,0 +1,968 @@
+/* =========================================
+   ESTILOS LISTA DE HORARIOS - ESTILO PROFESORES
+   Adaptado para coincidir visualmente
+========================================= */
+
+:root {
+    --negro: #000000;
+    --blanco: #ffffff;
+    --azul: #1e40af;
+    --azul-hover: #1e3a8a;
+    --rojo: #dc2626;
+    --rojo-hover: #b91c1c;
+    --verde: #16a34a;
+    --verde-hover: #15803d;
+    --naranja: #ea580c;
+    --naranja-hover: #c2410c;
+    --gris: #6b7280;
+    --gris-hover: #4b5563;
+    --borde-suave: #d1d5db;
+    --texto-ayuda: #6b7280;
+    --gris-claro: #f9fafb;
+    --gris-medio: #e5e7eb;
+    --primary: #2563eb;
+}
+
+/* =========================================
+   BASE
+========================================= */
+
+body {
+    background: #f8f9fa;
+    color: var(--negro);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header-final {
+    background: var(--blanco);
+    border: 1px solid var(--borde-suave);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.titulo-final {
+    color: var(--negro);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.subtitulo-final {
+    color: var(--texto-ayuda);
+    font-size: 0.95rem;
+    margin: 0.5rem 0 0 0;
+    font-weight: 400;
+}
+
+/* =========================================
+   BOTONES
+========================================= */
+
+.btn-final {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.btn-azul-final {
+    background: var(--azul);
+    color: var(--blanco);
+}
+
+.btn-azul-final:hover:not(:disabled) {
+    background: var(--azul-hover);
+    box-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
+    transform: translateY(-1px);
+    color: var(--blanco);
+}
+
+.btn-azul-final:active {
+    transform: translateY(0);
+}
+
+.btn-rojo-final {
+    background: var(--rojo);
+    color: var(--blanco);
+}
+
+.btn-rojo-final:hover:not(:disabled) {
+    background: var(--rojo-hover);
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+    transform: translateY(-1px);
+    color: var(--blanco);
+}
+
+.btn-rojo-final:active {
+    transform: translateY(0);
+}
+
+.btn-final:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   CARDS
+========================================= */
+
+.card-final {
+    background: var(--blanco);
+    border: 1px solid var(--borde-suave);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-header-final {
+    background: var(--blanco);
+    color: var(--negro);
+    padding: 1.25rem 1.5rem;
+    border-bottom: 2px solid var(--borde-suave);
+}
+
+.card-header-final h6 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+}
+
+/* =========================================
+   FORMULARIOS
+========================================= */
+
+.label-final {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--negro);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.select-final {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--borde-suave);
+    border-radius: 8px;
+    background: var(--blanco);
+    font-size: 0.9rem;
+    color: var(--negro);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.select-final:hover {
+    border-color: var(--texto-ayuda);
+}
+
+.select-final:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+/* =========================================
+   ESTADO VACÍO
+========================================= */
+
+.estado-vacio-final {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--blanco);
+    border: 2px dashed var(--borde-suave);
+    border-radius: 12px;
+}
+
+.icono-vacio-final {
+    font-size: 4rem;
+    color: var(--borde-suave);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.titulo-vacio-final {
+    color: var(--negro);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.texto-vacio-final {
+    color: var(--texto-ayuda);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* =========================================
+   TÍTULO NIVEL HORARIO
+========================================= */
+
+.titulo-nivel-horario {
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    padding: 1rem 0;
+    border-bottom: 3px solid var(--primary);
+}
+
+/* =========================================
+   CARDS DE GRADO - ESTILO PROFESORES
+========================================= */
+
+.horario-card {
+    background: var(--blanco);
+    border: 1px solid var(--borde-suave);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.horario-card .card-header {
+    background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+    color: var(--blanco);
+    padding: 1.25rem 1.5rem;
+    border-bottom: none;
+}
+
+.horario-card .card-header h5 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    color: var(--blanco);
+}
+
+.horario-card .card-body {
+    padding: 1.5rem;
+    background: #fafafa;
+}
+
+.horario-body {
+    padding: 1.5rem;
+    background: #fafafa;
+}
+
+/* =========================================
+   BOTONES DEL HEADER - MEJORADOS
+========================================= */
+
+.horario-card .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+}
+
+/* ✅ BOTÓN OCULTAR/MOSTRAR - MEJORADO CON CONTRASTE */
+.btn-light-custom {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #1e40af !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    font-weight: 700 !important;
+}
+
+.btn-light-custom:hover {
+    background: var(--blanco) !important;
+    color: #1e3a8a !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: var(--blanco) !important;
+}
+
+.btn-light-custom i {
+    font-size: 0.875rem;
+}
+
+/* Botón PDF Completo */
+.btn-pdf-completo {
+    background: var(--rojo) !important;
+    color: var(--blanco) !important;
+    border: none !important;
+}
+
+.btn-pdf-completo:hover {
+    background: var(--rojo-hover) !important;
+    color: var(--blanco) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.3);
+}
+
+/* Botón PDF Materias */
+.btn-pdf-materias {
+    background: var(--verde) !important;
+    color: var(--blanco) !important;
+    border: none !important;
+}
+
+.btn-pdf-materias:hover {
+    background: var(--verde-hover) !important;
+    color: var(--blanco) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(22, 163, 74, 0.3);
+}
+
+/* =========================================
+   TABLA DE HORARIOS - ESTILO PROFESORES
+========================================= */
+
+.horario-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 8px;
+    table-layout: fixed;
+    background-color: transparent;
+}
+
+/* Cabeceras de días */
+.horario-table thead th {
+    background-color: #1f2937;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+    border: none;
+    text-transform: capitalize;
+}
+
+/* Columna de horas */
+.hora-cell {
+    width: 80px;
+    font-weight: 700;
+    color: #475569;
+    text-align: center;
+    vertical-align: middle;
+    background: #f1f5f9;
+    border-radius: 8px;
+    border: 2px solid #cbd5e1;
+    font-size: 1rem;
+}
+
+/* Celdas con clase - ESTILO PROFESORES */
+.clase-cell {
+    background-color: #eff6ff;
+    border: 2px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 12px;
+    vertical-align: middle;
+    min-height: 90px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+
+.clase-cell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--azul);
+}
+
+.clase-editable {
+    cursor: pointer;
+}
+
+.clase-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+}
+
+.asignatura-nombre {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.profesor-nombre {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Celdas vacías - ESTILO PROFESORES */
+.empty-cell {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    min-height: 90px;
+}
+
+.empty-cell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--azul);
+}
+
+.empty-cell .text-muted {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Botón + en celdas vacías */
+.btn-add-icon {
+    width: 45px;
+    height: 45px;
+    background-color: #dbeafe;
+    color: #1e40af;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 25px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Fila de recreo - ESTILO PROFESORES */
+.recreo-row td {
+    background-color: #fef9c3 !important;
+    border: 2px solid #fde047 !important;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 700;
+    color: #854d0e;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   MODAL - ESTILO PROFESORES
+========================================= */
+
+.modal-xl-final {
+    max-width: 900px;
+}
+
+.modal-final {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header-final {
+    background: var(--blanco);
+    color: var(--negro);
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--borde-suave);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.modal-titulo-final {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--negro);
+    display: flex;
+    align-items: center;
+}
+
+.modal-subtitulo-final {
+    font-size: 0.9rem;
+    color: var(--texto-ayuda);
+    margin: 0.5rem 0 0 0;
+}
+
+.btn-close-final {
+    background: #e5e7eb !important;
+    border: none !important;
+    border-radius: 50% !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative;
+}
+
+.btn-close-final::after {
+    content: "×";
+    color: #000000;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn-close-final:hover {
+    background: #d1d5db !important;
+}
+
+.btn-close-final i {
+    display: none;
+}
+
+.modal-body-final {
+    padding: 2rem;
+    background: var(--blanco);
+}
+
+.form-group-final {
+    margin-bottom: 0;
+}
+
+.label-modal-final {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--negro);
+    margin-bottom: 0.5rem;
+}
+
+.select-modal-final {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--borde-suave);
+    border-radius: 8px;
+    background: var(--blanco);
+    font-size: 0.95rem;
+    color: var(--negro);
+    transition: all 0.2s ease;
+}
+
+.select-modal-final:hover {
+    border-color: var(--texto-ayuda);
+}
+
+.select-modal-final:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+.select-modal-final:disabled {
+    background: var(--gris-claro);
+    color: var(--texto-ayuda);
+    cursor: not-allowed;
+}
+
+.ayuda-texto {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--texto-ayuda);
+    margin-top: 0.375rem;
+}
+
+.alerta-final {
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.alerta-warning-final {
+    background: #fef3c7;
+    border: 1px solid #fbbf24;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+}
+
+.modal-footer-final {
+    background: var(--gris-claro);
+    padding: 1.25rem 2rem;
+    border-top: 1px solid var(--borde-suave);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.btn-modal-final {
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-modal-cancelar {
+    background: var(--blanco);
+    color: var(--negro);
+    border: 1px solid var(--borde-suave);
+}
+
+.btn-modal-cancelar:hover {
+    background: var(--gris-medio);
+    transform: translateY(-1px);
+}
+
+.btn-modal-eliminar {
+    background: var(--rojo);
+    color: var(--blanco);
+}
+
+.btn-modal-eliminar:hover {
+    background: var(--rojo-hover);
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+    transform: translateY(-1px);
+}
+
+.btn-modal-guardar {
+    background: var(--azul);
+    color: var(--blanco);
+}
+
+.btn-modal-guardar:hover {
+    background: var(--azul-hover);
+    box-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
+    transform: translateY(-1px);
+}
+
+.btn-modal-final:active {
+    transform: translateY(0);
+}
+
+/* =========================================
+   ANIMACIÓN DE ACTUALIZACIÓN
+========================================= */
+
+.celda-actualizando {
+    animation: pulseUpdate 0.6s ease-in-out;
+}
+
+@keyframes pulseUpdate {
+    0%, 100% {
+        transform: scale(1);
+        background-color: inherit;
+    }
+    50% {
+        transform: scale(1.05);
+        background-color: #dbeafe;
+    }
+}
+
+/* =========================================
+   IMPRESIÓN
+========================================= */
+
+@media print {
+    body {
+        background: white !important;
+        color: #000 !important;
+        font-size: 11px;
+    }
+
+    .horario-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+    }
+
+    .horario-table thead th {
+        background: #e5e7eb !important;
+        color: #000 !important;
+        font-weight: 700;
+        border: 1px solid #333 !important;
+        padding: 8px !important;
+        border-radius: 0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .horario-table td {
+        border: 1px solid #333 !important;
+        padding: 8px !important;
+        vertical-align: middle !important;
+        border-radius: 0 !important;
+    }
+
+    .hora-cell {
+        background: #f3f4f6 !important;
+        font-weight: bold;
+        text-align: center;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .clase-cell {
+        background: #eff6ff !important;
+        font-weight: 600;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .empty-cell {
+        background: #ffffff !important;
+        color: #666 !important;
+    }
+
+    .recreo-row td {
+        background: #fef9c3 !important;
+        font-weight: bold;
+        text-align: center;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .card-header,
+    button,
+    .btn,
+    .btn-final,
+    .btn-add-icon,
+    .bi {
+        display: none !important;
+    }
+
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    * {
+        box-shadow: none !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+    .header-final {
+        padding: 1.5rem;
+    }
+
+    .titulo-final {
+        font-size: 1.5rem;
+    }
+
+    .horario-table {
+        border-spacing: 4px;
+        font-size: 0.85rem;
+    }
+
+    .horario-table thead th {
+        font-size: 0.75rem;
+        padding: 10px 4px;
+    }
+
+    .hora-cell {
+        width: 60px;
+        font-size: 0.85rem;
+        padding: 8px 4px;
+    }
+
+    .clase-cell,
+    .empty-cell {
+        padding: 8px;
+        min-height: 75px;
+    }
+
+    .asignatura-nombre {
+        font-size: 0.8rem;
+    }
+
+    .profesor-nombre {
+        font-size: 0.7rem;
+    }
+
+    .btn-add-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+    }
+
+    .btn-final {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .horario-card .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* =========================================
+   SPINNER DE CARGA
+========================================= */
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3rem;
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+/* =========================================
+   GRADIENTES
+========================================= */
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%) !important;
+}
+
+/* =========================================
+   UTILIDADES
+========================================= */
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.py-5 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.me-1 {
+    margin-right: 0.25rem;
+}
+
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.gap-3 {
+    gap: 1rem;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.text-muted {
+    color: var(--texto-ayuda) !important;
+}
+
+.text-warning {
+    color: #f59e0b !important;
+}
+
+.text-danger {
+    color: var(--rojo) !important;
+}
+
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+/* =========================================
+   MEJORAS DE ACCESIBILIDAD
+========================================= */
+
+*:focus-visible {
+    outline: 2px solid var(--azul);
+    outline-offset: 2px;
+}
+
+button:disabled,
+select:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
