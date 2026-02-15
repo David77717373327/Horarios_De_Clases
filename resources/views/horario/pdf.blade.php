@@ -23,8 +23,6 @@
             font-weight: 900;
             color: #000;
         }
-        
-
 
         .grado-title { 
             text-align: center; 
@@ -36,9 +34,6 @@
             color: #000;
             border: 1px solid #c3e6cb;
         }
-
-
-        
 
         .horario-wrapper {
             margin-bottom: 8px;
@@ -72,31 +67,20 @@
             background: #fff;
         }
 
-        /* Columna de Hora - MUY PEQUEÑA (35px) */
         col.col-hora {
             width: 30px;
         }
 
-        /* Columnas de días - distribuir el resto equitativamente */
         col.col-dia {
             width: calc((100% - 35px) / 5);
         }
 
-
-        /* Números de hora - MÁS GRANDES Y MÁS NEGROS */
         td.hora-cell {
-            font-size: 20px;
+            font-size: 13px;
             font-weight: 900;
             color: #000;
         }
 
-
-
-
-
-
-
-        /* Contenido de las celdas de horario */
         td strong {
             font-size: 16px;
             display: block;
@@ -118,7 +102,6 @@
             height: 20px;
         }
 
-        /* Letra R del recreo MÁS GRANDE Y NEGRA */
         .recreo-row td.hora-cell {
             font-size: 16px;
             font-weight: 900;
@@ -129,7 +112,6 @@
             page-break-after: always;
         }
 
-        /* Espaciador entre los dos horarios */
         .spacer {
             height: 10px;
         }
@@ -144,7 +126,6 @@
 
 @foreach($horarios as $gradoId => $horariosGrado)
 
-    {{-- Título de página solo en la primera de cada par --}}
     @if($contador % 2 == 0)
         <div class="page-header">Horario {{ $nivelNombre }} – Año {{ $year }}</div>
     @endif
@@ -153,7 +134,8 @@
         <div class="grado-title">{{ $horariosGrado->first()->grado->nombre }}</div>
 
         @include('horario.partials.tabla-pdf', [
-            'horarios' => $horariosGrado
+            'horarios' => $horariosGrado,
+            'configuracion' => $configuracion
         ])
     </div>
 
@@ -161,22 +143,13 @@
         $contador++;
     @endphp
 
-    {{-- Espaciador entre horarios en la misma página --}}
     @if($contador % 2 == 1 && $contador < $totalGrados)
         <div class="spacer"></div>
     @endif
 
-    {{-- Salto de página cada 2 grados (excepto en el último) --}}
     @if($contador % 2 == 0 && $contador < $totalGrados)
         <div class="page-break"></div>
     @endif
 @endforeach
 </body>
 </html>
-
-
-
-
-
-
-

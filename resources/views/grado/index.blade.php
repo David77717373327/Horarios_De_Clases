@@ -8,15 +8,47 @@
         <p class="text-muted mb-0" style="font-size: 0.95rem;">Administra los grados académicos por nivel educativo</p>
     </div>
 
-    {{-- Mensajes de éxito --}}
+    {{-- Mensajes de éxito/error --}}
     @if(session('success'))
-        <div class="alert alert-success border-0 shadow-sm mb-4" style="border-left: 4px solid #10b981 !important;">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-left: 4px solid #10b981; background-color: #f0fdf4; border-color: #86efac;">
             <div class="d-flex align-items-center">
-                <svg width="20" height="20" fill="currentColor" class="me-2" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                </svg>
-                {{ session('success') }}
+                <i class="fas fa-check-circle me-3" style="color: #10b981; font-size: 1.5rem;"></i>
+                <div>
+                    <strong style="color: #065f46;">¡Éxito!</strong>
+                    <p class="mb-0" style="color: #047857;">{{ session('success') }}</p>
+                </div>
             </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="border-left: 4px solid #ef4444; background-color: #fef2f2; border-color: #fca5a5;">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-circle me-3" style="color: #ef4444; font-size: 1.5rem;"></i>
+                <div>
+                    <strong style="color: #991b1b;">Error</strong>
+                    <p class="mb-0" style="color: #dc2626;">{{ session('error') }}</p>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="border-left: 4px solid #f59e0b; background-color: #fffbeb; border-color: #fcd34d;">
+            <div class="d-flex align-items-start">
+                <i class="fas fa-exclamation-triangle me-3 mt-1" style="color: #f59e0b; font-size: 1.5rem;"></i>
+                <div>
+                    <strong style="color: #92400e;">Errores de validación</strong>
+                    <ul class="mb-0 mt-2" style="color: #b45309; padding-left: 1.2rem;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
@@ -25,9 +57,7 @@
         <div class="card-body p-4">
             <div class="d-flex align-items-center mb-3">
                 <div class="d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; background-color: #eff6ff; border-radius: 8px;">
-                    <svg width="20" height="20" fill="#1e40af" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                    </svg>
+                    <i class="fas fa-plus-circle" style="color: #1e40af; font-size: 1.25rem;"></i>
                 </div>
                 <div>
                     <h5 class="mb-0 fw-semibold" style="color: #000000; font-size: 1.05rem;">Crear Nuevo Grado</h5>
@@ -35,7 +65,7 @@
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('grados.store') }}">
+            <form method="POST" action="{{ route('grados.store') }}" id="create-form">
                 @csrf
                 <div class="row g-3">
                     <div class="col-md-5">
@@ -82,9 +112,7 @@
                             type="submit" 
                             class="btn btn-primary-custom w-100 fw-semibold d-flex align-items-center justify-content-center" 
                             style="background-color: #1e40af; color: #ffffff; padding: 0.625rem 1rem; border: none; font-size: 0.95rem; height: 42px;">
-                            <svg width="18" height="18" fill="currentColor" class="me-2" viewBox="0 0 16 16">
-                                <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
-                            </svg>
+                            <i class="fas fa-save me-2"></i>
                             Guardar
                         </button>
                     </div>
@@ -123,36 +151,36 @@
                                 </td>
                                 <td class="align-middle" style="padding: 1rem 1.5rem;">
                                     <div class="d-inline-flex align-items-center" style="background-color: #f0f9ff; color: #0369a1; padding: 0.4rem 0.85rem; border-radius: 6px; font-weight: 500; font-size: 0.875rem; border: 1px solid #bae6fd;">
-                                        <svg width="14" height="14" fill="currentColor" class="me-2" viewBox="0 0 16 16">
-                                            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                                        </svg>
+                                        <i class="fas fa-graduation-cap me-2" style="font-size: 0.875rem;"></i>
                                         {{ $grado->nivel->nombre }}
                                     </div>
                                 </td>
                                 <td class="align-middle text-center" style="padding: 1rem 1.5rem;">
-                                    <form action="{{ route('grados.destroy', $grado) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
+                                    <div class="btn-group" role="group">
+                                        {{-- Botón EDITAR --}}
                                         <button 
-                                            type="submit"
-                                            class="btn btn-sm fw-medium btn-delete d-inline-flex align-items-center"
-                                            style="background-color: #dc2626; color: #ffffff; border: none; padding: 0.425rem 1rem; font-size: 0.875rem;"
-                                            onclick="return confirm('¿Está seguro de eliminar este grado?')">
-                                            <svg width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                            </svg>
-                                            Eliminar
+                                            type="button"
+                                            class="btn btn-sm btn-editar"
+                                            onclick="openEditModal({{ $grado->id }}, '{{ $grado->nombre }}', {{ $grado->nivel_id }})"
+                                            title="Editar grado">
+                                            <i class="fas fa-edit"></i>
                                         </button>
-                                    </form>
+                                        
+                                        {{-- Botón ELIMINAR --}}
+                                        <button 
+                                            type="button"
+                                            class="btn btn-sm btn-eliminar"
+                                            onclick="confirmDelete({{ $grado->id }}, '{{ $grado->nombre }}', '{{ $grado->nivel->nombre }}', {{ $grado->horarios_count ?? 0 }})"
+                                            title="Eliminar grado">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="4" class="text-center" style="padding: 3.5rem; color: #9ca3af;">
-                                    <svg width="56" height="56" fill="currentColor" class="mb-3 mx-auto d-block opacity-50" viewBox="0 0 16 16">
-                                        <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                                    </svg>
+                                    <i class="fas fa-inbox fa-3x mb-3 opacity-50"></i>
                                     <p class="mb-1 fw-semibold" style="font-size: 1.05rem; color: #6b7280;">No hay grados registrados</p>
                                     <small class="text-muted">Complete el formulario superior para crear su primer grado académico</small>
                                 </td>
@@ -164,6 +192,83 @@
         </div>
     </div>
 </div>
+
+{{-- MODAL EDITAR --}}
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border: none; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.15);">
+            <div class="modal-header" style="background-color: #f9fafb; border-bottom: 2px solid #e5e7eb; padding: 1.5rem;">
+                <h5 class="modal-title fw-bold" style="color: #1e40af;">
+                    <i class="fas fa-edit me-2"></i>Editar Grado
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" id="edit-form">
+                @csrf
+                @method('PUT')
+                <div class="modal-body" style="padding: 2rem;">
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold" style="color: #374151; font-size: 0.95rem;">
+                            <i class="fas fa-tag me-2" style="color: #6b7280;"></i>Nombre del Grado
+                        </label>
+                        <input 
+                            type="text" 
+                            name="nombre" 
+                            id="edit-nombre"
+                            class="form-control form-control-lg"
+                            placeholder="Ej: Sexto 601, Primero A"
+                            style="border: 2px solid #d1d5db; padding: 0.75rem 1rem; font-size: 1rem; border-radius: 0.5rem;"
+                            required>
+                        <small class="text-muted d-block mt-2" style="font-size: 0.85rem;">
+                            <i class="fas fa-info-circle me-1"></i>Modifica el nombre del grado
+                        </small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold" style="color: #374151; font-size: 0.95rem;">
+                            <i class="fas fa-graduation-cap me-2" style="color: #6b7280;"></i>Nivel Académico
+                        </label>
+                        <select 
+                            name="nivel_id" 
+                            id="edit-nivel-id"
+                            class="form-select form-select-lg"
+                            style="border: 2px solid #d1d5db; padding: 0.75rem 1rem; font-size: 1rem; border-radius: 0.5rem;"
+                            required>
+                            <option value="">Seleccionar...</option>
+                            @foreach($niveles as $nivel)
+                                <option value="{{ $nivel->id }}">{{ $nivel->nombre }}</option>
+                            @endforeach
+                        </select>
+                        <small class="text-muted d-block mt-2" style="font-size: 0.85rem;">
+                            <i class="fas fa-info-circle me-1"></i>Cambia el nivel educativo si es necesario
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #e5e7eb; padding: 1.25rem 1.5rem; background-color: #f9fafb;">
+                    <button 
+                        type="button" 
+                        class="btn btn-secondary fw-semibold"
+                        data-bs-dismiss="modal"
+                        style="padding: 0.625rem 1.5rem;">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button 
+                        type="submit" 
+                        class="btn fw-semibold"
+                        style="background-color: #2563eb; color: #ffffff; padding: 0.625rem 1.5rem; border: none;">
+                        <i class="fas fa-save me-2"></i>Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{-- Formulario oculto para eliminación --}}
+<form id="delete-form" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
 
 <style>
 /* Estilos mejorados */
@@ -183,15 +288,11 @@
 }
 
 .table-hover tbody tr:hover {
-    background-color: #fafbfc;
+    background-color: #f9fafb;
 }
 
 .shadow-sm {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
-}
-
-.btn-delete:hover {
-    background-color: #b91c1c !important;
 }
 
 .btn-primary-custom:hover {
@@ -204,5 +305,187 @@
     background-position: right 0.75rem center;
     background-size: 16px 12px;
 }
+
+/* Botones con SOLO ÍCONOS */
+.btn-editar {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+    border-radius: 0.375rem;
+}
+
+.btn-editar:hover {
+    background-color: #1d4ed8 !important;
+    color: #ffffff;
+}
+
+.btn-eliminar {
+    background-color: #dc2626;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+    border-radius: 0.375rem;
+}
+
+.btn-eliminar:hover {
+    background-color: #b91c1c !important;
+    color: #ffffff;
+}
+
+.btn-group {
+    gap: 0.5rem;
+    display: flex;
+}
+
+/* Alertas personalizadas */
+.alert {
+    border-radius: 0.5rem;
+    animation: slideInDown 0.3s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Auto-ocultar alertas después de 5 segundos */
+.alert-success {
+    animation: slideInDown 0.3s ease-out, fadeOut 0.5s ease-out 4.5s forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Modal profesional */
+.modal-content {
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+// Abrir modal de edición
+function openEditModal(id, nombre, nivelId) {
+    document.getElementById('edit-nombre').value = nombre;
+    document.getElementById('edit-nivel-id').value = nivelId;
+    document.getElementById('edit-form').action = "{{ url('grados') }}/" + id;
+    
+    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+    editModal.show();
+    
+    setTimeout(() => {
+        document.getElementById('edit-nombre').focus();
+        document.getElementById('edit-nombre').select();
+    }, 300);
+}
+
+// Confirmar eliminación con SweetAlert
+function confirmDelete(id, nombre, nivelNombre, horariosCount) {
+    Swal.fire({
+        title: '¿Eliminar grado?',
+        html: `
+            <div style="text-align: left; margin-top: 1rem;">
+                <p style="font-size: 1.05rem; margin-bottom: 0.5rem;">
+                    Grado: <strong style="color: #1e40af;">${nombre}</strong>
+                </p>
+                <p style="font-size: 0.95rem; margin-bottom: 1rem; color: #6b7280;">
+                    Nivel: <strong>${nivelNombre}</strong>
+                </p>
+                ${horariosCount > 0 ? `
+                <div style="background: #fef2f2; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #dc2626;">
+                    <p style="margin: 0 0 0.5rem 0; color: #991b1b; font-weight: 600;">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Se eliminarán permanentemente:
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.5rem; color: #7f1d1d;">
+                        <li><strong>${horariosCount}</strong> horario(s) asociado(s)</li>
+                        <li>Todas las asignaciones relacionadas</li>
+                    </ul>
+                </div>
+                ` : `
+                <div style="background: #fffbeb; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #f59e0b;">
+                    <p style="margin: 0; color: #92400e;">
+                        <i class="fas fa-info-circle me-2"></i>Este grado no tiene horarios y se puede eliminar de forma segura.
+                    </p>
+                </div>
+                `}
+            </div>
+        `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc2626',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: '<i class="fas fa-trash me-2"></i>Sí, eliminar',
+        cancelButtonText: '<i class="fas fa-times me-2"></i>Cancelar',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Mostrar loading
+            Swal.fire({
+                title: 'Eliminando grado...',
+                html: '<p style="margin: 1rem 0; color: #6b7280;">Por favor espere mientras se eliminan todos los registros relacionados</p>',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Enviar formulario
+            const form = document.getElementById('delete-form');
+            form.action = "{{ url('grados') }}/" + id;
+            form.submit();
+        }
+    });
+}
+
+// Prevenir doble submit en formulario de creación
+document.getElementById('create-form').addEventListener('submit', function(e) {
+    const btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
+});
+
+// Prevenir doble submit en formulario de edición
+document.getElementById('edit-form').addEventListener('submit', function(e) {
+    const btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
+});
+
+// Auto-cerrar alertas de éxito después de 5 segundos
+setTimeout(() => {
+    const successAlert = document.querySelector('.alert-success');
+    if (successAlert) {
+        const bsAlert = new bootstrap.Alert(successAlert);
+        bsAlert.close();
+    }
+}, 5000);
+</script>
+
 @endsection

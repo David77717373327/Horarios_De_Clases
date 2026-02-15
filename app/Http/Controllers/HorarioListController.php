@@ -16,11 +16,16 @@ class HorarioListController extends Controller
 {
 
     public function pdf(Request $request)
-    {
+{
+    try {
         $nivelId = $request->nivel_id;
         $year = $request->year;
 
-        // Obtener el nombre del nivel desde la base de datos
+        Log::info('🎯 Iniciando generación de PDF', [
+            'nivel_id' => $nivelId,
+            'year' => $year
+        ]);
+
         $nivel = Nivel::find($nivelId);
         $nivelNombre = $nivel ? $nivel->nombre : 'Sin Nivel';
 
@@ -33,34 +38,148 @@ class HorarioListController extends Controller
             ->get()
             ->groupBy('grado_id');
 
-        return Pdf::loadView('horario.pdf', compact('horarios', 'year', 'nivelNombre'))
+        Log::info('📊 Horarios obtenidos', [
+            'total_grados' => $horarios->count(),
+            'total_registros' => $horarios->flatten()->count()
+        ]);
+
+        // ✅ EXTRAER CONFIGURACIÓN Y LIMPIAR FORMATO
+        $configuracion = null;
+        foreach ($horarios as $horariosGrado) {
+            if ($horariosGrado->isNotEmpty()) {
+                $primer = $horariosGrado->first();
+                
+                // ✅ EXTRAER SOLO LA HORA (HH:MM) del timestamp
+                $horaInicio = $primer->hora_inicio;
+                if (strlen($horaInicio) > 5) {
+                    // Si es timestamp completo, extraer solo HH:MM
+                    $horaInicio = date('H:i', strtotime($horaInicio));
+                }
+                
+                $configuracion = [
+                    'hora_inicio' => $horaInicio,
+                    'duracion_clase' => (int)$primer->duracion_clase,
+                    'recreo_despues_hora' => $primer->recreo_despues_hora,
+                    'recreo_duracion' => (int)$primer->recreo_duracion
+                ];
+                
+                Log::info('⚙️ Configuración extraída y limpiada', $configuracion);
+                break;
+            }
+        }
+
+        if (!$configuracion) {
+            Log::warning('⚠️ No se encontró configuración, usando valores por defecto');
+            $configuracion = [
+                'hora_inicio' => '07:00',
+                'duracion_clase' => 45,
+                'recreo_despues_hora' => 2,
+                'recreo_duracion' => 15
+            ];
+        }
+
+        Log::info('✅ Generando PDF...');
+
+        return Pdf::loadView('horario.pdf', compact('horarios', 'year', 'nivelNombre', 'configuracion'))
             ->setPaper('letter', 'landscape')
             ->download('horario-academico.pdf');
+
+    } catch (\Exception $e) {
+        Log::error('❌ Error generando PDF', [
+            'error' => $e->getMessage(),
+            'linea' => $e->getLine(),
+            'archivo' => $e->getFile()
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Error al generar PDF: ' . $e->getMessage()
+        ], 500);
     }
-
-
+}
 
 public function pdfSoloMaterias(Request $request)
 {
-    $nivelId = $request->nivel_id;
-    $year = $request->year;
+    try {
+        $nivelId = $request->nivel_id;
+        $year = $request->year;
 
-    $nivel = Nivel::find($nivelId);
-    $nivelNombre = $nivel ? $nivel->nombre : 'Sin Nivel';
+        Log::info('🎯 Iniciando generación de PDF Solo Materias', [
+            'nivel_id' => $nivelId,
+            'year' => $year
+        ]);
 
-    $horarios = Horario::with(['grado', 'asignatura', 'profesor'])
-        ->where('nivel_id', $nivelId)
-        ->where('year', $year)
-        ->orderBy('grado_id')
-        ->orderBy('hora_numero')
-        ->orderBy('dia_semana')
-        ->get()
-        ->groupBy('grado_id');
+        $nivel = Nivel::find($nivelId);
+        $nivelNombre = $nivel ? $nivel->nombre : 'Sin Nivel';
 
-    return Pdf::loadView('horario.pdf-solo-materias', compact('horarios', 'year', 'nivelNombre'))
-        ->setPaper('letter', 'landscape')
-        ->download('horario-solo-materias.pdf');
+        $horarios = Horario::with(['grado', 'asignatura', 'profesor'])
+            ->where('nivel_id', $nivelId)
+            ->where('year', $year)
+            ->orderBy('grado_id')
+            ->orderBy('hora_numero')
+            ->orderBy('dia_semana')
+            ->get()
+            ->groupBy('grado_id');
+
+        Log::info('📊 Horarios obtenidos', [
+            'total_grados' => $horarios->count(),
+            'total_registros' => $horarios->flatten()->count()
+        ]);
+
+        // ✅ EXTRAER CONFIGURACIÓN Y LIMPIAR FORMATO
+        $configuracion = null;
+        foreach ($horarios as $horariosGrado) {
+            if ($horariosGrado->isNotEmpty()) {
+                $primer = $horariosGrado->first();
+                
+                // ✅ EXTRAER SOLO LA HORA (HH:MM) del timestamp
+                $horaInicio = $primer->hora_inicio;
+                if (strlen($horaInicio) > 5) {
+                    $horaInicio = date('H:i', strtotime($horaInicio));
+                }
+                
+                $configuracion = [
+                    'hora_inicio' => $horaInicio,
+                    'duracion_clase' => (int)$primer->duracion_clase,
+                    'recreo_despues_hora' => $primer->recreo_despues_hora,
+                    'recreo_duracion' => (int)$primer->recreo_duracion
+                ];
+                
+                Log::info('⚙️ Configuración extraída y limpiada', $configuracion);
+                break;
+            }
+        }
+
+        if (!$configuracion) {
+            Log::warning('⚠️ No se encontró configuración, usando valores por defecto');
+            $configuracion = [
+                'hora_inicio' => '07:00',
+                'duracion_clase' => 45,
+                'recreo_despues_hora' => 2,
+                'recreo_duracion' => 15
+            ];
+        }
+
+        Log::info('✅ Generando PDF Solo Materias...');
+
+        return Pdf::loadView('horario.pdf-solo-materias', compact('horarios', 'year', 'nivelNombre', 'configuracion'))
+            ->setPaper('letter', 'landscape')
+            ->download('horario-solo-materias.pdf');
+
+    } catch (\Exception $e) {
+        Log::error('❌ Error generando PDF Solo Materias', [
+            'error' => $e->getMessage(),
+            'linea' => $e->getLine(),
+            'archivo' => $e->getFile()
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Error al generar PDF: ' . $e->getMessage()
+        ], 500);
+    }
 }
+
 
 
 

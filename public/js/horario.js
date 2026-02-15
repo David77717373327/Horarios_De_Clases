@@ -1,3 +1,8 @@
+// ========================================
+// GENERADOR AUTOMÁTICO DE HORARIOS v8.0
+// JavaScript Completo - Refactorizado
+// ========================================
+
 // Estado Global de la Aplicación
 const appState = {
     nivel: null,
@@ -18,12 +23,17 @@ const appState = {
     gradosDelNivel: []
 };
 
-// Inicialización
+// ========================================
+// INICIALIZACIÓN
+// ========================================
 $(document).ready(function() {
     initializeEventListeners();
+    console.log('✅ Generador de Horarios v8.0 inicializado');
 });
 
-// Event Listeners
+// ========================================
+// EVENT LISTENERS
+// ========================================
 function initializeEventListeners() {
     $('#nivel').on('change', handleNivelChange);
     $('#btnContinue').on('click', handleContinue);
@@ -35,6 +45,10 @@ function initializeEventListeners() {
     $('#btnVerDiagnostico').on('click', mostrarModalDiagnostico);
     $('#btnCerrarDiagnostico').on('click', () => $('#modalDiagnostico').modal('hide'));
 }
+
+// ========================================
+// MANEJO DE EVENTOS PRINCIPALES
+// ========================================
 
 // Manejar cambio de nivel
 function handleNivelChange() {
@@ -48,8 +62,12 @@ function handleNivelChange() {
     console.log('Nivel ID:', nivelId);
     
     if (!nivelId) {
+        ocultarInfoAsignaciones();
         return;
     }
+    
+    // Mostrar mensaje informativo básico
+    mostrarMensajeNivelSeleccionado();
 }
 
 // Continuar a Paso 2
@@ -65,75 +83,23 @@ function handleContinue() {
     appState.nivel = nivel;
     appState.year = year;
     
-    // Verificar asignaciones académicas del nivel
-    verificarAsignacionesNivel();
-    
+    actualizarSelectedInfo();
     toggleSteps('stepSchedule');
 }
 
-// Verificar Asignaciones Académicas del Nivel
-function verificarAsignacionesNivel() {
-    if (!appState.nivel || !appState.year) {
-        return;
-    }
-    
-    $.ajax({
-        url: `/generador/nivel/${appState.nivel}/estadisticas`,
-        method: 'GET',
-        data: { year: appState.year },
-        success: function(response) {
-            if (response.success && response.estadisticas) {
-                const stats = response.estadisticas;
-                mostrarInfoAsignaciones(stats);
-            } else {
-                ocultarInfoAsignaciones();
-            }
-        },
-        error: function() {
-            ocultarInfoAsignaciones();
-        }
-    });
-}
-
-// Mostrar información de asignaciones
-function mostrarInfoAsignaciones(stats) {
-    const totalGrados = stats.total_grados || 0;
-    const gradosConAsignaciones = stats.grados_con_asignaciones || 0;
-    
-    let mensaje = '';
-    let claseCss = '';
-    
-    if (gradosConAsignaciones === 0) {
-        mensaje = `
-            <strong>⚠️ Sin Asignaciones Académicas</strong>
-            <br>No hay asignaciones académicas configuradas para este nivel en ${appState.year}.
-            <br>Por favor, configure primero las asignaciones académicas antes de generar el horario.
-        `;
-        claseCss = 'alert-warning';
-        $('#btnGenerarAutomatico').prop('disabled', true);
-    } else if (gradosConAsignaciones < totalGrados) {
-        mensaje = `
-            <strong>⚠️ Asignaciones Incompletas</strong>
-            <br>Solo ${gradosConAsignaciones} de ${totalGrados} grados tienen asignaciones configuradas.
-            <br>Se recomienda configurar todos los grados antes de generar el horario.
-        `;
-        claseCss = 'alert-warning';
-        $('#btnGenerarAutomatico').prop('disabled', false);
-    } else {
-        mensaje = `
-            <strong>✅ Nivel Listo para Generación</strong>
-            <br>• Total de grados en el nivel: <strong>${totalGrados}</strong>
-            <br>• Grados con asignaciones: <strong>${gradosConAsignaciones}</strong>
-            <br>• 🚀 <em>El sistema generará automáticamente todos los grados del nivel de forma óptima</em>
-        `;
-        claseCss = 'alert-info';
-        $('#btnGenerarAutomatico').prop('disabled', false);
-    }
+// Mostrar mensaje cuando se selecciona un nivel
+function mostrarMensajeNivelSeleccionado() {
+    const mensaje = `
+        <strong>ℹ️ Nivel Seleccionado</strong>
+        <br>El sistema generará automáticamente <strong>todos los grados de este nivel</strong> de forma coordinada.
+        <br>Esto optimiza la distribución y evita conflictos de profesores entre grados.
+    `;
     
     $('#infoAsignaciones')
-        .removeClass('d-none alert-info alert-warning alert-success')
-        .addClass(claseCss);
+        .removeClass('d-none alert-info alert-warning alert-danger')
+        .addClass('alert-info');
     $('#textoAsignaciones').html(mensaje);
+    $('#btnGenerarAutomatico').prop('disabled', false);
 }
 
 // Ocultar información de asignaciones
@@ -141,6 +107,10 @@ function ocultarInfoAsignaciones() {
     $('#infoAsignaciones').addClass('d-none');
     $('#btnGenerarAutomatico').prop('disabled', false);
 }
+
+// ========================================
+// GENERACIÓN AUTOMÁTICA
+// ========================================
 
 // Abrir modal de generación automática
 function abrirModalGeneracionAutomatica() {
@@ -160,20 +130,6 @@ function abrirModalGeneracionAutomatica() {
     if (appState.config.diasSemana.length === 0) {
         showNotification('Seleccione al menos un día de clase', 'warning');
         return;
-    }
-    
-    // Mensaje sobre generación por nivel
-    const mensajeNivel = `
-        <div class="alert alert-info mt-3">
-            <i class="bi bi-info-circle me-2"></i>
-            <strong>Generación Inteligente por Nivel</strong>
-            <br>El sistema generará automáticamente <strong>todos los grados del nivel</strong> de forma coordinada.
-            <br>Esto optimiza la distribución y garantiza que no haya conflictos de profesores entre grados.
-        </div>
-    `;
-    
-    if ($('#mensajeNivel').length === 0) {
-        $('#modoReemplazar').parent().parent().after(`<div id="mensajeNivel">${mensajeNivel}</div>`);
     }
     
     $('#modoReemplazar').prop('checked', true);
@@ -203,6 +159,7 @@ function ejecutarGeneracionAutomatica() {
     
     console.log('📤 Configuración enviada al servidor:', configuracion);
     
+    // Simulación de progreso
     let progreso = 0;
     const mensajesProgreso = [
         '📚 Analizando todos los grados del nivel...',
@@ -229,7 +186,7 @@ function ejecutarGeneracionAutomatica() {
         }
     }, 600);
     
-    // Llamar al backend (ahora es /nivel/{nivelId}/generar)
+    // 🔥 LLAMADA AL BACKEND - RUTA ACTUALIZADA
     $.ajax({
         url: `/generador/nivel/${appState.nivel}/generar`,
         method: 'POST',
@@ -270,6 +227,10 @@ function ejecutarGeneracionAutomatica() {
         }
     });
 }
+
+// ========================================
+// PROCESAMIENTO DE RESPUESTAS
+// ========================================
 
 // Procesar horario exitoso
 function procesarHorarioExitoso(response) {
@@ -371,6 +332,10 @@ function procesarErrorGeneracion(xhr) {
     }
 }
 
+// ========================================
+// VISUALIZACIÓN DE ESTADÍSTICAS
+// ========================================
+
 // Mostrar estadísticas con información de nivel
 function mostrarEstadisticasGeneracionNivel(statsNivel, gradosGenerados) {
     if (!statsNivel) {
@@ -411,6 +376,10 @@ function mostrarEstadisticasGeneracionNivel(statsNivel, gradosGenerados) {
     $('#statsContent').html(html);
     $('#statsAutomaticas').removeClass('d-none');
 }
+
+// ========================================
+// MODAL DE DIAGNÓSTICO
+// ========================================
 
 // Mostrar modal de diagnóstico completo
 function mostrarModalDiagnosticoCompleto(errorData) {
@@ -556,6 +525,22 @@ function mostrarModalDiagnosticoCompleto(errorData) {
     modal.modal('show');
 }
 
+// Mostrar modal de diagnóstico
+function mostrarModalDiagnostico() {
+    if (!appState.ultimoDiagnostico && !appState.estadisticasGeneracion) {
+        showNotification('No hay diagnóstico disponible', 'info');
+        return;
+    }
+    
+    const errorData = {
+        message: 'Análisis del último intento de generación',
+        estadisticas: appState.estadisticasGeneracion,
+        diagnostico: appState.ultimoDiagnostico
+    };
+    
+    mostrarModalDiagnosticoCompleto(errorData);
+}
+
 // Actualizar progreso de generación
 function actualizarProgresoGeneracion(mensaje, porcentaje) {
     const porcentajeRedondeado = Math.round(porcentaje);
@@ -578,21 +563,9 @@ function actualizarProgresoGeneracion(mensaje, porcentaje) {
     }
 }
 
-// Mostrar modal de diagnóstico
-function mostrarModalDiagnostico() {
-    if (!appState.ultimoDiagnostico && !appState.estadisticasGeneracion) {
-        showNotification('No hay diagnóstico disponible', 'info');
-        return;
-    }
-    
-    const errorData = {
-        message: 'Análisis del último intento de generación',
-        estadisticas: appState.estadisticasGeneracion,
-        diagnostico: appState.ultimoDiagnostico
-    };
-    
-    mostrarModalDiagnosticoCompleto(errorData);
-}
+// ========================================
+// GENERACIÓN DE TABLAS DE HORARIO
+// ========================================
 
 // Generar Tablas de Horario para todos los grados del nivel
 function generarTablasHorarioNivel() {
@@ -621,6 +594,15 @@ function generarTablasHorarioNivel() {
             </div>
         `;
     });
+    
+    if (htmlCompleto === '') {
+        htmlCompleto = `
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                No se pudieron cargar los horarios. Intente regenerar.
+            </div>
+        `;
+    }
     
     $('#horarioTableContainer').html(htmlCompleto);
 }
@@ -689,6 +671,10 @@ function generarTablaHorarioGrado(horariosGrado) {
     return html;
 }
 
+// ========================================
+// OTRAS FUNCIONES
+// ========================================
+
 // Regenerar Horario
 function handleRegenerar() {
     if (!confirm('¿Está seguro de regenerar el horario? Se eliminará el horario actual del nivel completo y se generará uno nuevo.')) {
@@ -705,6 +691,10 @@ function handleRegenerar() {
     showNotification('Puede configurar nuevamente y regenerar el horario del nivel', 'info');
 }
 
+// ========================================
+// CONFIGURACIÓN AJAX
+// ========================================
+
 // Configuración global de AJAX para CSRF
 $.ajaxSetup({
     headers: {
@@ -714,7 +704,10 @@ $.ajaxSetup({
     }
 });
 
-// Utilidades
+// ========================================
+// UTILIDADES
+// ========================================
+
 function toggleSteps(showStep) {
     $('#stepConfig, #stepSchedule, #stepGrid').addClass('d-none');
     $(`#${showStep}`).removeClass('d-none');
@@ -749,3 +742,15 @@ function showNotification(message, type) {
     $('body').append(toast);
     setTimeout(() => toast.remove(), 5000);
 }
+
+// ========================================
+// LOG DE VERSIÓN
+// ========================================
+console.log(`
+╔════════════════════════════════════════╗
+║  GENERADOR DE HORARIOS v8.0           ║
+║  Sistema Refactorizado                 ║
+║  ✅ Servicio: AutoSchedulerService    ║
+║  ✅ Ruta: /generador/nivel/{id}/gener ║
+╚════════════════════════════════════════╝
+`);

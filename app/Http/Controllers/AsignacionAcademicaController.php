@@ -99,9 +99,6 @@ class AsignacionAcademicaController extends Controller
     /**
      * Obtener grados por nivel
      */
-    /**
-     * Obtener grados por nivel - VERSION MEJORADA CON DEBUG
-     */
     public function gradosPorNivel($nivelId)
     {
         try {
@@ -120,7 +117,7 @@ class AsignacionAcademicaController extends Controller
 
             // Obtener grados
             $grados = Grado::where('nivel_id', $nivelId)
-                ->orderBy('nombre') // Si no tienes 'orden', usa 'nombre'
+                ->orderBy('nombre')
                 ->get(['id', 'nombre']);
 
             Log::info('Grados encontrados', [
@@ -152,9 +149,6 @@ class AsignacionAcademicaController extends Controller
     /**
      * Alias para compatibilidad
      */
-
-
-
     public function getGradosByNivel($nivelId)
     {
         return $this->gradosPorNivel($nivelId);
@@ -386,7 +380,7 @@ class AsignacionAcademicaController extends Controller
                         ->exists();
 
                     if ($existe) {
-                        continue; // Saltar esta asignación
+                        continue;
                     }
                 }
 
@@ -397,7 +391,11 @@ class AsignacionAcademicaController extends Controller
                     'grado_id' => $asignacion->grado_id,
                     'horas_semanales' => $asignacion->horas_semanales,
                     'year' => $yearDestino,
-                    'periodo_id' => $asignacion->periodo_id
+                    'periodo_id' => $asignacion->periodo_id,
+                    // ✅ COPIAR NUEVOS CAMPOS
+                    'posicion_jornada' => $asignacion->posicion_jornada,
+                    'max_horas_por_dia' => $asignacion->max_horas_por_dia,
+                    'max_dias_semana' => $asignacion->max_dias_semana
                 ]);
 
                 $copiadas++;
@@ -443,7 +441,11 @@ class AsignacionAcademicaController extends Controller
             'grado_id' => 'required|exists:grados,id',
             'horas_semanales' => 'required|integer|min:1|max:40',
             'year' => 'required|integer',
-            'periodo_id' => 'nullable|integer|min:1|max:4'
+            'periodo_id' => 'nullable|integer|min:1|max:4',
+            // ✅ VALIDACIÓN DE NUEVOS CAMPOS
+            'posicion_jornada' => 'nullable|in:primeras_horas,ultimas_horas,antes_recreo,despues_recreo,sin_restriccion',
+            'max_horas_por_dia' => 'nullable|integer|min:1|max:8',
+            'max_dias_semana' => 'nullable|integer|min:1|max:5'
         ]);
 
         if ($validator->fails()) {
@@ -549,7 +551,11 @@ class AsignacionAcademicaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'horas_semanales' => 'required|integer|min:1|max:40',
-            'periodo_id' => 'nullable|integer|min:1|max:4'
+            'periodo_id' => 'nullable|integer|min:1|max:4',
+            // ✅ VALIDACIÓN DE NUEVOS CAMPOS
+            'posicion_jornada' => 'nullable|in:primeras_horas,ultimas_horas,antes_recreo,despues_recreo,sin_restriccion',
+            'max_horas_por_dia' => 'nullable|integer|min:1|max:8',
+            'max_dias_semana' => 'nullable|integer|min:1|max:5'
         ]);
 
         if ($validator->fails()) {
@@ -563,7 +569,15 @@ class AsignacionAcademicaController extends Controller
         DB::beginTransaction();
         try {
             $asignacion = AsignacionAcademica::findOrFail($id);
-            $asignacion->update($request->only(['horas_semanales', 'periodo_id']));
+            
+            // ✅ ACTUALIZAR CON NUEVOS CAMPOS
+            $asignacion->update($request->only([
+                'horas_semanales', 
+                'periodo_id',
+                'posicion_jornada',
+                'max_horas_por_dia',
+                'max_dias_semana'
+            ]));
 
             DB::commit();
 
@@ -710,11 +724,9 @@ class AsignacionAcademicaController extends Controller
 
             $profesor = User::findOrFail($profesorId);
 
-            // Si el modelo User tiene el método resumenCargaAcademica
             if (method_exists($profesor, 'resumenCargaAcademica')) {
                 $resumen = $profesor->resumenCargaAcademica($year);
             } else {
-                // Calcular manualmente
                 $asignaciones = AsignacionAcademica::where('profesor_id', $profesorId)
                     ->where('year', $year)
                     ->with(['asignatura', 'grado'])
@@ -843,7 +855,6 @@ class AsignacionAcademicaController extends Controller
         $currentYear = date('Y');
         $years = [];
 
-        // 2 años atrás hasta 5 años adelante
         for ($i = -2; $i <= 5; $i++) {
             $years[] = $currentYear + $i;
         }

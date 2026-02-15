@@ -17,46 +17,39 @@ class AsignacionAcademica extends Model
         'grado_id',
         'horas_semanales',
         'year',
-        'periodo_id'
+        'periodo_id',
+        'posicion_jornada',
+        'max_horas_por_dia',
+        'max_dias_semana'
     ];
 
     protected $casts = [
         'horas_semanales' => 'integer',
         'year' => 'integer',
         'periodo_id' => 'integer',
+        'max_horas_por_dia' => 'integer',
+        'max_dias_semana' => 'integer',
     ];
 
     // ========================================
     // RELACIONES
     // ========================================
 
-    /**
-     * Profesor asignado (relación con User)
-     */
     public function profesor()
     {
         return $this->belongsTo(User::class, 'profesor_id');
     }
 
-    /**
-     * Asignatura a impartir
-     */
     public function asignatura()
     {
         return $this->belongsTo(Asignatura::class);
     }
 
-    /**
-     * Grado donde se imparte
-     */
     public function grado()
     {
         return $this->belongsTo(Grado::class);
     }
 
-    /**
-     * Horarios generados a partir de esta asignación
-     */
     public function horarios()
     {
         return $this->hasMany(Horario::class, 'asignacion_academica_id');
@@ -66,46 +59,31 @@ class AsignacionAcademica extends Model
     // MÉTODOS DE CÁLCULO
     // ========================================
 
-    /**
- * Obtener total de horas ya asignadas en horarios
- * ✅ CORREGIDO: Busca por coincidencia de datos, no solo por relación
- */
-public function horasAsignadas()
-{
-    // Primero intentar por relación directa (más eficiente)
-    $porRelacion = $this->horarios()->count();
-    
-    if ($porRelacion > 0) {
-        return $porRelacion;
+    public function horasAsignadas()
+    {
+        $porRelacion = $this->horarios()->count();
+        
+        if ($porRelacion > 0) {
+            return $porRelacion;
+        }
+        
+        return \App\Models\Horario::where('grado_id', $this->grado_id)
+            ->where('asignatura_id', $this->asignatura_id)
+            ->where('profesor_id', $this->profesor_id)
+            ->where('year', $this->year)
+            ->count();
     }
-    
-    // Si no hay relación, buscar por coincidencia de datos
-    return \App\Models\Horario::where('grado_id', $this->grado_id)
-        ->where('asignatura_id', $this->asignatura_id)
-        ->where('profesor_id', $this->profesor_id)
-        ->where('year', $this->year)
-        ->count();
-}
 
-    /**
-     * Obtener horas pendientes por asignar
-     */
     public function horasPendientes()
     {
         return max(0, $this->horas_semanales - $this->horasAsignadas());
     }
 
-    /**
-     * Verificar si la asignación está completa
-     */
     public function estaCompleta()
     {
         return $this->horasAsignadas() >= $this->horas_semanales;
     }
 
-    /**
-     * Calcular porcentaje de completado
-     */
     public function porcentajeCompletado()
     {
         if ($this->horas_semanales == 0) {
@@ -115,9 +93,6 @@ public function horasAsignadas()
         return round(($this->horasAsignadas() / $this->horas_semanales) * 100, 1);
     }
 
-    /**
-     * Obtener estado de la asignación
-     */
     public function getEstadoAttribute()
     {
         $horasAsignadas = $this->horasAsignadas();
@@ -131,9 +106,6 @@ public function horasAsignadas()
         }
     }
 
-    /**
-     * Obtener color del estado para UI
-     */
     public function getColorEstadoAttribute()
     {
         switch ($this->estado) {
@@ -149,44 +121,43 @@ public function horasAsignadas()
     }
 
     // ========================================
-    // SCOPES (Consultas reutilizables)
+    // NUEVOS MÉTODOS PARA RESTRICCIONES
     // ========================================
 
-    /**
-     * Filtrar por año académico
-     */
+    public function tieneRestriccionPosicion()
+    {
+        return $this->posicion_jornada && $this->posicion_jornada !== 'sin_restriccion';
+    }
+
+    public function tieneRestriccionDistribucion()
+    {
+        return $this->max_horas_por_dia !== null || $this->max_dias_semana !== null;
+    }
+
+    // ========================================
+    // SCOPES
+    // ========================================
+
     public function scopeYear($query, $year)
     {
         return $query->where('year', $year);
     }
 
-    /**
-     * Filtrar por profesor
-     */
     public function scopeProfesor($query, $profesorId)
     {
         return $query->where('profesor_id', $profesorId);
     }
 
-    /**
-     * Filtrar por grado
-     */
     public function scopeGrado($query, $gradoId)
     {
         return $query->where('grado_id', $gradoId);
     }
 
-    /**
-     * Obtener solo asignaciones incompletas
-     */
     public function scopeIncompletas($query)
     {
         return $query->whereRaw('(SELECT COUNT(*) FROM horarios WHERE horarios.asignacion_academica_id = asignaciones_academicas.id) < asignaciones_academicas.horas_semanales');
     }
 
-    /**
-     * Obtener solo asignaciones completas
-     */
     public function scopeCompletas($query)
     {
         return $query->whereRaw('(SELECT COUNT(*) FROM horarios WHERE horarios.asignacion_academica_id = asignaciones_academicas.id) >= asignaciones_academicas.horas_semanales');
@@ -196,9 +167,6 @@ public function horasAsignadas()
     // MÉTODOS ESTÁTICOS ÚTILES
     // ========================================
 
-    /**
-     * Obtener resumen de asignaciones por profesor
-     */
     public static function resumenProfesor($profesorId, $year)
     {
         $asignaciones = self::where('profesor_id', $profesorId)
@@ -214,9 +182,6 @@ public function horasAsignadas()
         ];
     }
 
-    /**
-     * Obtener resumen de asignaciones por grado
-     */
     public static function resumenGrado($gradoId, $year)
     {
         $asignaciones = self::where('grado_id', $gradoId)
@@ -236,20 +201,15 @@ public function horasAsignadas()
     // VALIDACIONES
     // ========================================
 
-    /**
-     * Validar si se puede crear esta asignación
-     */
     public function validarCreacion()
     {
         $errores = [];
 
-        // Verificar que el profesor puede dar esta asignatura
         $profesor = User::find($this->profesor_id);
         if ($profesor && !$profesor->asignaturas->contains($this->asignatura_id)) {
             $errores[] = 'El profesor no está habilitado para impartir esta asignatura';
         }
 
-        // Verificar que no exista duplicado
         $existe = self::where('profesor_id', $this->profesor_id)
             ->where('asignatura_id', $this->asignatura_id)
             ->where('grado_id', $this->grado_id)

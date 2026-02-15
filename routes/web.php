@@ -32,15 +32,10 @@ Route::prefix('profesores')->name('profesores.')->group(function () {
         ->name('asignar-asignaturas');
 });
 
-
-
 // ========================================
 // CRUD de Niveles
 // ========================================
 Route::resource('niveles', NivelController::class)->except(['create', 'edit', 'show']);
-
-
-
 
 // ========================================
 // CRUD de Grados
@@ -95,6 +90,7 @@ Route::prefix('asignaciones')->group(function () {
     Route::get('/nivel/{nivelId}/grados', [AsignacionAcademicaController::class, 'gradosPorNivel'])->name('asignaciones.grados-nivel');
     Route::post('/validar', [AsignacionAcademicaController::class, 'validar'])->name('asignaciones.validar');
     
+    
     // Nuevas rutas para funcionalidades mejoradas
     Route::get('/matriz/{gradoId}', [AsignacionAcademicaController::class, 'obtenerMatriz'])->name('asignaciones.matriz');
     Route::post('/masiva', [AsignacionAcademicaController::class, 'guardarMasiva'])->name('asignaciones.masiva');
@@ -130,24 +126,47 @@ Route::prefix('restricciones')->group(function () {
     Route::post('/verificar', [RestriccionProfesorController::class, 'verificarRestriccion'])->name('restricciones.verificar');
 });
 
+
+
+
+
+
+
+
+
+
 // ============================================
-// 🔥 GENERADOR AUTOMÁTICO DE HORARIOS
+// 🔥 GENERADOR AUTOMÁTICO DE HORARIOS (REFACTORIZADO)
 // ============================================
-Route::prefix('generador')->group(function () {
-    // 🆕 RUTAS PARA GENERACIÓN POR NIVEL (NUEVO SISTEMA v8.0)
+Route::prefix('generador')->name('generador.')->group(function () {
+    // 🆕 RUTAS PARA GENERACIÓN POR NIVEL (SISTEMA v8.0 - REFACTORIZADO)
     Route::post('/nivel/{nivelId}/generar', [GeneradorHorarioController::class, 'generarAutomatico'])
-        ->name('generador.generar.nivel');
+        ->name('generar.nivel');
     
-    Route::get('/nivel/{nivelId}/estadisticas', [GeneradorHorarioController::class, 'estadisticas'])
-        ->name('generador.estadisticas.nivel');
+    // Nota: Si necesitas el método estadisticas(), deberás agregarlo al controlador refactorizado
+    // Route::get('/nivel/{nivelId}/estadisticas', [GeneradorHorarioController::class, 'estadisticas'])
+    //     ->name('estadisticas.nivel');
     
     // Rutas antiguas por grado (mantener por compatibilidad si hay código legacy)
+    // Si ya no las necesitas, puedes comentarlas o eliminarlas
     Route::post('/grado/{gradoId}/generar', [GeneradorHorarioController::class, 'generarAutomatico'])
-        ->name('generador.generar');
+        ->name('generar');
     
-    Route::get('/grado/{gradoId}/estadisticas', [GeneradorHorarioController::class, 'estadisticas'])
-        ->name('generador.estadisticas');
+    // Route::get('/grado/{gradoId}/estadisticas', [GeneradorHorarioController::class, 'estadisticas'])
+    //     ->name('estadisticas');
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ============================================
 // HORARIOS DE PROFESORES

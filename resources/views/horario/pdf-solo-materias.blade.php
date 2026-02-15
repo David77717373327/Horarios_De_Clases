@@ -76,7 +76,7 @@
         }
 
         td.hora-cell {
-            font-size: 20px;
+            font-size: 13px;
             font-weight: 900;
             color: #000;
         }
@@ -128,7 +128,8 @@
         <div class="grado-title">{{ $horariosGrado->first()->grado->nombre }}</div>
 
         @include('horario.partials.tabla-pdf-solo-materias', [
-            'horarios' => $horariosGrado
+            'horarios' => $horariosGrado,
+            'configuracion' => $configuracion
         ])
     </div>
 
