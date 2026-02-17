@@ -258,6 +258,14 @@ function renderizarHorario(data) {
     console.log('✅ Horario renderizado exitosamente');
 }
 
+
+
+
+
+
+
+
+
 // ========================================
 // DESCARGAR PDF - SIN VISTA EN BLANCO
 // ========================================
@@ -275,7 +283,6 @@ function descargarPDF() {
         return;
     }
 
-    // Mostrar animación de carga primero
     Swal.fire({
         title: 'Generando PDF...',
         text: 'Por favor espera un momento',
@@ -285,24 +292,11 @@ function descargarPDF() {
         }
     });
 
-    // Esperar un momento para que la animación se muestre antes de abrir el PDF
+    const url = `/horarios-profesor/pdf?profesor_id=${profesorId}&year=${year}`;
+    
     setTimeout(() => {
-        const url = `/horarios-profesor/pdf?profesor_id=${profesorId}&year=${year}`;
-        
-        // Crear iframe oculto para generar el PDF sin abrir pestaña en blanco
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = url;
-        document.body.appendChild(iframe);
-        
-        // Remover el iframe después de cargar
-        setTimeout(() => {
-            document.body.removeChild(iframe);
-        }, 1000);
-        
-        // Cerrar animación
-        setTimeout(() => {
-            Swal.close();
-        }, 1500);
-    }, 300);
+        Swal.close();
+    }, 3000);
+    
+    window.location.href = url;
 }

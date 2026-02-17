@@ -317,9 +317,17 @@ function generarTablaHorario(gradoData, index) {
     return html;
 }
 
-// ========================================
-// DESCARGAR PDFs - SIN VISTA EN BLANCO
-// ========================================
+
+
+
+
+
+
+
+
+
+
+
 function descargarPDFCompleto(gradoId) {
     const year = $('#filterYear').val();
     
@@ -342,23 +350,21 @@ function descargarPDFCompleto(gradoId) {
         }
     });
 
+    const url = `/horarios/horarios/pdf?nivel_id=${nivelActual}&year=${year}&grado_id=${gradoId}`;
+    
     setTimeout(() => {
-        const url = `/horarios/horarios/pdf?nivel_id=${nivelActual}&year=${year}&grado_id=${gradoId}`;
-        
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = url;
-        document.body.appendChild(iframe);
-        
-        setTimeout(() => {
-            document.body.removeChild(iframe);
-        }, 1000);
-        
-        setTimeout(() => {
-            Swal.close();
-        }, 1500);
-    }, 300);
+        Swal.close();
+    }, 3000);
+    
+    window.location.href = url;
 }
+
+
+
+
+
+
+
 
 function descargarPDFMaterias(gradoId) {
     const year = $('#filterYear').val();
@@ -382,23 +388,24 @@ function descargarPDFMaterias(gradoId) {
         }
     });
 
+    const url = `/horarios/horarios/pdf-solo-materias?nivel_id=${nivelActual}&year=${year}&grado_id=${gradoId}`;
+    
     setTimeout(() => {
-        const url = `/horarios/horarios/pdf-solo-materias?nivel_id=${nivelActual}&year=${year}&grado_id=${gradoId}`;
-        
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = url;
-        document.body.appendChild(iframe);
-        
-        setTimeout(() => {
-            document.body.removeChild(iframe);
-        }, 1000);
-        
-        setTimeout(() => {
-            Swal.close();
-        }, 1500);
-    }, 300);
+        Swal.close();
+    }, 3000);
+    
+    window.location.href = url;
 }
+
+
+
+
+
+
+
+
+
+
 
 // ========================================
 // ABRIR MODAL DE EDICIÓN - MEJORADO
