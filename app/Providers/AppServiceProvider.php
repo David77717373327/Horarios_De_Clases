@@ -27,6 +27,22 @@ use App\Interfaces\Repositories\RestriccionProfesorRepositoryInterface;
 use App\Interfaces\Services\RestriccionProfesorServiceInterface;
 use App\Repositories\RestriccionProfesorRepository;
 use App\Services\RestriccionProfesorService;
+use App\Interfaces\Repositories\HorarioRepositoryInterface;
+use App\Interfaces\Services\Horario\HorarioServiceInterface;
+use App\Interfaces\Services\Horario\GeneradorHorarioServiceInterface;
+use App\Interfaces\Services\Horario\AutoSchedulerServiceInterface;
+use App\Repositories\HorarioRepository;
+use App\Services\Horario\HorarioService;
+use App\Services\Horario\GeneradorHorarioService;
+use App\Services\Horario\AutoSchedulerService;
+use App\Interfaces\Repositories\HorarioListRepositoryInterface;
+use App\Interfaces\Services\HorarioListServiceInterface;
+use App\Repositories\HorarioListRepository;
+use App\Services\HorarioListService;
+use App\Interfaces\Repositories\HorarioProfesorRepositoryInterface;
+use App\Interfaces\Services\HorarioProfesorServiceInterface;
+use App\Repositories\HorarioProfesorRepository;
+use App\Services\HorarioProfesorService;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -59,6 +75,20 @@ class AppServiceProvider extends ServiceProvider
         // Restriccion Profesor
         $this->app->bind(RestriccionProfesorRepositoryInterface::class, RestriccionProfesorRepository::class);
         $this->app->bind(RestriccionProfesorServiceInterface::class, RestriccionProfesorService::class);
+
+        // Horario
+        $this->app->bind(HorarioRepositoryInterface::class,          HorarioRepository::class);
+        $this->app->bind(HorarioServiceInterface::class,             HorarioService::class);
+        $this->app->bind(GeneradorHorarioServiceInterface::class,    GeneradorHorarioService::class);
+        $this->app->bind(AutoSchedulerServiceInterface::class,       AutoSchedulerService::class);
+
+        // Horario List
+        $this->app->bind(HorarioListRepositoryInterface::class, HorarioListRepository::class);
+        $this->app->bind(HorarioListServiceInterface::class,    HorarioListService::class);
+
+        // Horario Profesor
+        $this->app->bind(HorarioProfesorRepositoryInterface::class, HorarioProfesorRepository::class);
+        $this->app->bind(HorarioProfesorServiceInterface::class,    HorarioProfesorService::class);
     }
 
     /**
