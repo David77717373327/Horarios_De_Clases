@@ -8,12 +8,12 @@
     <!-- Header -->
     <div class="row mb-4">
         <div class="col-12">
-            <div class="card shadow-sm">
+            <div class="">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h2 class="mb-0">
-                                <i class="fas fa-ban text-warning"></i>
+                                
                                 Restricciones de Profesores
                             </h2>
                             <p class="text-muted mb-0">

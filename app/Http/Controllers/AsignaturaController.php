@@ -2,60 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Asignatura\StoreAsignaturaRequest;
+use App\Http\Requests\Asignatura\UpdateAsignaturaRequest;
+use App\Interfaces\Services\AsignaturaServiceInterface;
 use App\Models\Asignatura;
-use Illuminate\Http\Request;
 
 class AsignaturaController extends Controller
 {
-    // Mostrar listado de asignaturas
+    public function __construct(
+        private AsignaturaServiceInterface $asignaturaService
+    ) {}
+
     public function index()
     {
-        $asignaturas = Asignatura::orderBy('nombre')->get();
+        $asignaturas = $this->asignaturaService->getAllAsignaturas();
         return view('asignaturas.index', compact('asignaturas'));
     }
 
-    // Guardar nueva asignatura
-    public function store(Request $request)
+    public function store(StoreAsignaturaRequest $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255|unique:asignaturas,nombre',
-        ], [
-            'nombre.required' => 'El nombre de la asignatura es obligatorio.',
-            'nombre.unique' => 'Ya existe una asignatura con este nombre.',
-        ]);
-
-        Asignatura::create([
-            'nombre' => $request->nombre,
-        ]);
-
-        return redirect()->route('asignaturas.index')
-            ->with('success', 'Asignatura creada exitosamente.');
+        try {
+            $this->asignaturaService->createAsignatura($request->validated());
+            return redirect()->route('asignaturas.index')
+                ->with('success', 'Asignatura creada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('asignaturas.index')
+                ->with('error', 'Error al crear la asignatura: ' . $e->getMessage());
+        }
     }
 
-    // Actualizar asignatura
-    public function update(Request $request, Asignatura $asignatura)
+    public function update(UpdateAsignaturaRequest $request, Asignatura $asignatura)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255|unique:asignaturas,nombre,' . $asignatura->id,
-        ], [
-            'nombre.required' => 'El nombre de la asignatura es obligatorio.',
-            'nombre.unique' => 'Ya existe una asignatura con este nombre.',
-        ]);
-
-        $asignatura->update([
-            'nombre' => $request->nombre,
-        ]);
-
-        return redirect()->route('asignaturas.index')
-            ->with('success', 'Asignatura actualizada exitosamente.');
+        try {
+            $this->asignaturaService->updateAsignatura($asignatura, $request->validated());
+            return redirect()->route('asignaturas.index')
+                ->with('success', 'Asignatura actualizada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('asignaturas.index')
+                ->with('error', 'Error al actualizar la asignatura: ' . $e->getMessage());
+        }
     }
 
-    // Eliminar asignatura
     public function destroy(Asignatura $asignatura)
     {
-        $asignatura->delete();
-
-        return redirect()->route('asignaturas.index')
-            ->with('success', 'Asignatura eliminada exitosamente.');
+        try {
+            $this->asignaturaService->deleteAsignatura($asignatura);
+            return redirect()->route('asignaturas.index')
+                ->with('success', 'Asignatura eliminada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('asignaturas.index')
+                ->with('error', 'Error al eliminar la asignatura: ' . $e->getMessage());
+        }
     }
 }

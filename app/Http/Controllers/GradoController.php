@@ -2,67 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Grado\StoreGradoRequest;
+use App\Http\Requests\Grado\UpdateGradoRequest;
+use App\Interfaces\Services\GradoServiceInterface;
 use App\Models\Grado;
-use App\Models\Nivel;
-use Illuminate\Http\Request;
 
 class GradoController extends Controller
 {
+    public function __construct(
+        private GradoServiceInterface $gradoService
+    ) {}
+
     public function index()
     {
-        // Cargar grados con el conteo de horarios para el mensaje de eliminación
-        $grados = Grado::with('nivel')
-            ->withCount('horarios')
-            ->orderBy('id')
-            ->get();
-            
-        $niveles = Nivel::orderBy('nombre')->get();
+        $grados  = $this->gradoService->getAllGrados();
+        $niveles = $this->gradoService->getNiveles();
 
         return view('grado.index', compact('grados', 'niveles'));
     }
 
-    public function store(Request $request)
+    public function store(StoreGradoRequest $request)
     {
         try {
-            $request->validate([
-                'nombre'   => 'required|string|max:50',
-                'nivel_id' => 'required|exists:niveles,id',
-            ], [
-                'nombre.required' => 'El nombre del grado es obligatorio',
-                'nombre.max' => 'El nombre no puede exceder 50 caracteres',
-                'nivel_id.required' => 'Debe seleccionar un nivel académico',
-                'nivel_id.exists' => 'El nivel seleccionado no existe',
-            ]);
-
-            Grado::create($request->only('nombre', 'nivel_id'));
-
+            $this->gradoService->createGrado($request->validated());
             return redirect()->route('grados.index')
                 ->with('success', 'Grado creado correctamente');
-                
         } catch (\Exception $e) {
             return redirect()->route('grados.index')
                 ->with('error', 'Error al crear el grado: ' . $e->getMessage());
         }
     }
 
-    public function update(Request $request, Grado $grado)
+    public function update(UpdateGradoRequest $request, Grado $grado)
     {
         try {
-            $request->validate([
-                'nombre'   => 'required|string|max:50',
-                'nivel_id' => 'required|exists:niveles,id',
-            ], [
-                'nombre.required' => 'El nombre del grado es obligatorio',
-                'nombre.max' => 'El nombre no puede exceder 50 caracteres',
-                'nivel_id.required' => 'Debe seleccionar un nivel académico',
-                'nivel_id.exists' => 'El nivel seleccionado no existe',
-            ]);
-
-            $grado->update($request->only('nombre', 'nivel_id'));
-
+            $this->gradoService->updateGrado($grado, $request->validated());
             return redirect()->route('grados.index')
                 ->with('success', 'Grado actualizado correctamente');
-                
         } catch (\Exception $e) {
             return redirect()->route('grados.index')
                 ->with('error', 'Error al actualizar el grado: ' . $e->getMessage());
@@ -72,12 +48,9 @@ class GradoController extends Controller
     public function destroy(Grado $grado)
     {
         try {
-            $nombreGrado = $grado->nombre;
-            $grado->delete();
-
+            $this->gradoService->deleteGrado($grado);
             return redirect()->route('grados.index')
-                ->with('success', "El grado '{$nombreGrado}' ha sido eliminado correctamente");
-                
+                ->with('success', "El grado '{$grado->nombre}' ha sido eliminado correctamente");
         } catch (\Exception $e) {
             return redirect()->route('grados.index')
                 ->with('error', 'Error al eliminar el grado: ' . $e->getMessage());
