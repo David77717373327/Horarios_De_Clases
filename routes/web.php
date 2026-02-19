@@ -152,10 +152,6 @@ Route::prefix('restricciones')->group(function () {
 
 
 
-
-
-
-
 // ============================================
 // 🔥 GENERADOR AUTOMÁTICO DE HORARIOS (REFACTORIZADO)
 // ============================================

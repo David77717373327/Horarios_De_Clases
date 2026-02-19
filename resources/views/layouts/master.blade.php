@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/master.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('styles')
 </head>
