@@ -12,7 +12,28 @@ use App\Http\Controllers\RestriccionProfesorController;
 use App\Http\Controllers\GeneradorHorarioController;
 use App\Http\Controllers\HorarioProfesorController;
 
-Route::get('/', function () { return view('welcome');})->name('inicio');
+
+
+
+
+Route::get('/', function () {
+    if (auth()->check()) {
+        return view('welcome');
+    }
+    return redirect()->route('login');
+})->name('inicio');
+
+
+
+
+// ✅ TODAS las rutas protegidas aquí dentro
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+
+
 
 // ========================================
 // CRUD de Asignaturas
@@ -189,4 +210,9 @@ Route::prefix('horarios-profesor')->group(function () {
     
     Route::get('/descargar-todos', [HorarioProfesorController::class, 'descargarTodosPdf'])
         ->name('horarios-profesor.descargar-todos');
+});
+
+
+
+
 });

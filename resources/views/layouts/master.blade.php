@@ -170,12 +170,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('restricciones.index') }}">
-                                <i class="fas fa-ban"></i>
-                                <span class="nav-text">Restricciones </span>
-                            </a>
-                        </li>
+                       
 
 
 
@@ -218,6 +213,14 @@
                             </ul>
                         </li>
 
+                        
+                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('restricciones.index') }}">
+                                <i class="fas fa-ban"></i>
+                                <span class="nav-text">Restricciones </span>
+                            </a>
+                        </li>
+
 
                     </ul>
                 </div>
@@ -238,9 +241,16 @@
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <form id="logout-form" action="#" method="POST" style="display: none;">
+
+
+    
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
+
+
+
+
 
     <!-- JavaScript -->
     <script>

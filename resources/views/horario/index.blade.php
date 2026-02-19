@@ -6,7 +6,7 @@
     <div class="header-final mb-4">
         <div class="d-flex justify-content-between align-items-start">
             <div>
-                <h2 class="titulo-final">📅 Crear Horario Académico por Nivel</h2>
+                <h2 class="titulo-final">Crear Horario Académico por Nivel</h2>
                 <p class="subtitulo-final">Configure y genere los horarios de todos los grados del nivel automáticamente</p>
             </div>
         </div>

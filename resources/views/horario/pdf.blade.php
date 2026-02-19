@@ -49,9 +49,6 @@
             width: 160px;
         }
 
-
-
-
         .colegio-nombre {
             font-size: 24px;
             font-weight: 900;
@@ -104,9 +101,6 @@
         }
 
 
-
-
-
         .year-box {
             background: #2d7a2d;
             color: #fff;
@@ -129,20 +123,6 @@
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
         /* ============================
            BANDA DEL GRADO - MÁS GRANDE
         ============================ */
@@ -155,10 +135,6 @@
             width: 100%;
             box-sizing: border-box;
         }
-
-
-
-
 
         .grado-label {
             font-size: 14px;
@@ -178,16 +154,6 @@
         .horario-wrapper {
             page-break-inside: avoid;
         }
-
-
-
-
-        
-
-
-
-
-
 
         /* ============================
            TABLA - CELDAS COMPACTAS
@@ -224,14 +190,6 @@
             height: 48px;
             background: #fff;
         }
-
-
-
-
-
-
-
-
 
         /* HORA MÁS GRANDE */
         td.hora-cell {
@@ -277,20 +235,6 @@
             letter-spacing: 1px;
             text-transform: uppercase;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
 
         /* ============================
            FILA RECREO - COMPACTA

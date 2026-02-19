@@ -1549,3 +1549,4 @@ class RestriccionProfesor extends Model
 
 
 
+php artisan optimize

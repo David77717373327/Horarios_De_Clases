@@ -233,6 +233,29 @@
     box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ============================================ */
 /* CARDS GRID - SIN BORDE AZUL IZQUIERDO */
 /* ============================================ */
@@ -370,6 +393,29 @@
     gap: 0.5rem;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ============================================ */
 /* FORMS */
 /* ============================================ */
@@ -432,6 +478,23 @@
 .text-muted {
     color: var(--text-medium) !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ============================================ */
 /* BUTTONS */
@@ -656,6 +719,7 @@
     margin-bottom: 2rem;
 }
 
+
 /* ============================================ */
 /* STATS */
 /* ============================================ */
@@ -665,46 +729,91 @@
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
-
+ 
 .stat-box {
-    padding: 1.5rem;
+    padding: 1.75rem 1.5rem;
     background: var(--white);
-    border: 2px solid var(--border-color);
+    border: 1px solid #cbd5e1;
     border-radius: var(--radius);
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: box-shadow 0.2s ease;
 }
 
-.stat-box.stat-primary {
-    border-color: var(--primary);
+.stat-box:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.stat-box.stat-success {
-    border-color: var(--success);
-}
+/* Fondos muy claros por color */
+.stat-box.stat-primary { background: #eff6ff; }
+.stat-box.stat-success { background: #f0fdf4; }
+.stat-box.stat-warning { background: #fffbeb; }
+.stat-box.stat-info    { background: #f0f9ff; }
 
-.stat-box.stat-warning {
-    border-color: var(--warning);
-}
-
-.stat-box.stat-info {
-    border-color: var(--info);
-}
-
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    line-height: 1;
-    margin-bottom: 0.5rem;
+/* Lado izquierdo: título arriba, número abajo */
+.stat-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
 
 .stat-text {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-dark);
+    color: #64748b; /* gris medio, rol secundario */
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    white-space: nowrap;
 }
+
+.stat-number {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-primary .stat-number { color: #1d4ed8; }
+.stat-success .stat-number { color: #15803d; }
+.stat-warning .stat-number { color: #b45309; }
+.stat-info    .stat-number { color: #0369a1; }
+
+/* Lado derecho: ícono con fondo */
+.stat-icon-wrapper {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.625rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-primary .stat-icon-wrapper { background: #bfdbfe; }
+.stat-success .stat-icon-wrapper { background: #bbf7d0; }
+.stat-warning .stat-icon-wrapper { background: #fde68a; }
+.stat-info    .stat-icon-wrapper { background: #bae6fd; }
+
+.stat-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.stat-primary .stat-icon { color: #1d4ed8; }
+.stat-success .stat-icon { color: #15803d; }
+.stat-warning .stat-icon { color: #b45309; }
+.stat-info    .stat-icon { color: #0369a1; }
+
+
+
+
+
+
+
+
+
+
 
 /* ============================================ */
 /* MODAL STATS GRID */
@@ -738,6 +847,17 @@
     color: var(--primary);
     line-height: 1;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /* ============================================ */
 /* MODAL */
@@ -858,6 +978,20 @@
     animation: fadeIn 0.3s ease;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ============================================ */
 /* LOADING & EMPTY */
 /* ============================================ */
@@ -910,6 +1044,24 @@
     color: var(--text-medium);
     margin: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ============================================ */
 /* RESPONSIVE */
