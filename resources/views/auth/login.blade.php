@@ -3,55 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Colegio Gimnasio Humanístico del Alto Magdalena</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <title>Iniciar Sesión - Gimnasio Humanístico del Alto Magdalena</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <body>
+
     <div class="login-container">
-        <!-- Tu imagen de fondo original conservada -->
-        <div class="login-background">
-            <div class="login-image-container">
-                <img class="login-bg-image" src="{{ asset('images/iniciooo2.jpeg') }}" alt="Background">
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-12 col-sm-10 col-md-10 col-lg-8 col-xl-8">
-                    <div class="card d-flex mx-auto my-5">
-                        <div class="row">
-                            <!-- Panel izquierdo - SIN imagen con marca de agua -->
-                            <div class="col-md-5 col-sm-12 col-xs-12 c1 p-0">
-                                <div class="welcome-section">
-                                    <!-- Logo principal - RESTAURANDO TU IMAGEN ORIGINAL -->
-                                    <div class="logo-container">
-                                        <div id="hero" class="hero-img">
-                                            <img class="img-fluid animated" src="{{ asset('images/Logo_inicio.png') }}" alt="Logo GHM">
+
+        {{-- Fondo de página --}}
+       <div class="login-background"></div>
+       
+        <div class="container-fluid main-wrapper">
+            <div class="row justify-content-center align-items-center min-vh-100">
+                <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-10">
+
+                    <div class="login-card">
+                        <div class="row g-0">
+
+                            {{-- ==============================
+                                 PANEL IZQUIERDO — CARRUSEL 3D
+                            =============================== --}}
+                            <div class="col-md-5 col-sm-12 panel-left p-0">
+
+                                {{-- CARRUSEL DE IMÁGENES 3D --}}
+                                <div class="carousel-3d">
+
+                                    {{-- Slide 1 --}}
+                                    <div class="slide-3d active" data-index="0">
+                                        <div class="slide-scene">
+                                            <img src="{{ asset('images/saluditos.png') }}"
+                                                 alt="Escena 1"
+                                                 class="img-3d">
                                         </div>
                                     </div>
-                                    
-                                    <!-- Contenido de bienvenida conservado -->
-                                    <div class="welcome-content">
-                                        <h1 class="welcome-title">Bienvenido(a)</h1>
-                                        <p class="welcome-subtitle">Sistema de Gestión Académica</p>
-                                        <div class="welcome-indicators">
-                                            <span class="indicator"></span>
-                                            <span class="indicator"></span>
-                                            <span class="indicator"></span>
+
+                                    {{-- Slide 2 — agrega tus imágenes aquí --}}
+                                    <div class="slide-3d" data-index="1">
+                                        <div class="slide-scene">
+                                            <img src="{{ asset('images/juego.png') }}"
+                                                 alt="Escena 2"
+                                                 class="img-3d">
                                         </div>
+                                    </div>
+
+                                    {{-- Slide 3 --}}
+                                    <div class="slide-3d" data-index="2">
+                                        <div class="slide-scene">
+                                            <img src="{{ asset('images/abrazo.png') }}"
+                                                 alt="Escena 3"
+                                                 class="img-3d">
+                                        </div>
+                                    </div>
+
+                                  
+                                    {{-- Para agregar más imágenes, copia este bloque:
+                                    
+                                    --}}
+
+                                </div>
+
+                                {{-- Texto y controles DEBAJO de la imagen --}}
+                                <div class="welcome-content">
+                                    <h1 class="welcome-title">Panel de<br>Administración</h1>
+                                    <p class="welcome-subtitle">Sistema de Gestión Académica</p>
+
+                                    {{-- Puntos de navegación del carrusel --}}
+                                    <div class="carousel-dots" id="carouselDots">
+                                        <button class="dot active" data-target="0" aria-label="Slide 1"></button>
+                                        <button class="dot"        data-target="1" aria-label="Slide 2"></button>
+                                        <button class="dot"        data-target="2" aria-label="Slide 3"></button>
                                     </div>
                                 </div>
+
                             </div>
-                            
-                            <!-- Panel derecho - Formulario con mejoras sutiles -->
-                            <div class="col-md-7 col-sm-12 col-xs-12 c2">
-                                <!-- Header mejorado conservando tu estilo -->
+
+
+
+
+
+                            {{-- ============================
+                                 PANEL DERECHO — FORMULARIO
+                            ============================= --}}
+                            <div class="col-md-7 col-sm-12 panel-right">
+
                                 <header class="form-header">
                                     <div class="institution-identity">
-                                        <img src="{{ asset('images/Logo.png') }}" alt="Logo institucional" class="institution-logo">
+                                        <img src="{{ asset('images/Logo.png') }}"
+                                             alt="Logo institucional"
+                                             class="institution-logo">
                                         <div class="institution-details">
                                             <h2 class="institution-name">Gimnasio Humanístico</h2>
                                             <p class="institution-location">
@@ -62,30 +106,37 @@
                                     </div>
                                 </header>
 
-                                <!-- Formulario con mejoras conservando tu diseño -->
                                 <div class="login-form-container">
+
                                     <div class="login-header">
-                                        <h3 class="login-title">Iniciar Sesión</h3>
-                                        <p class="login-subtitle">Ingresa tus credenciales para acceder al sistema</p>
-                                    </div>
-                                    
-                                    <form method="POST" action="{{ route('login') }}">
-                                        @csrf
+
+
+
                                         
-                                        <!-- Campo de email conservado -->
+
+
+
+                                        <h3 class="login-title">Acceso Administrativo</h3>
+                                        <p class="login-subtitle">Ingresa tus credenciales para continuar</p>
+                                    </div>
+
+                                    <form method="POST" action="{{ route('login') }}" id="loginForm" novalidate>
+                                        @csrf
+
+                                        {{-- Correo --}}
                                         <div class="form-group">
                                             <label for="email" class="form-label">Correo Electrónico</label>
                                             <div class="input-group">
                                                 <span class="input-group-text">
                                                     <i class="fas fa-envelope"></i>
                                                 </span>
-                                                <input id="email" 
-                                                       type="text" 
-                                                       class="form-control input-field @error('email') is-invalid @enderror" 
-                                                       name="email" 
-                                                       value="{{ old('email') }}" 
-                                                       placeholder="ejemplo@correo.com" 
-                                                       required 
+                                                <input id="email"
+                                                       type="text"
+                                                       class="form-control input-field @error('email') is-invalid @enderror"
+                                                       name="email"
+                                                       value="{{ old('email') }}"
+                                                       placeholder="ejemplo@correo.com"
+                                                       required
                                                        autofocus>
                                             </div>
                                             @error('email')
@@ -95,22 +146,23 @@
                                             @enderror
                                         </div>
 
-                                        <!-- Campo de contraseña conservado -->
+                                        {{-- Contraseña --}}
                                         <div class="form-group">
                                             <label for="password" class="form-label">Contraseña</label>
                                             <div class="input-group">
                                                 <span class="input-group-text">
                                                     <i class="fas fa-lock"></i>
                                                 </span>
-                                                <input id="password" 
-                                                       type="password" 
-                                                       class="form-control input-field @error('password') is-invalid @enderror" 
-                                                       name="password" 
-                                                       placeholder="Ingresa tu contraseña" 
+                                                <input id="password"
+                                                       type="password"
+                                                       class="form-control input-field @error('password') is-invalid @enderror"
+                                                       name="password"
+                                                       placeholder="Ingresa tu contraseña"
                                                        required>
-                                                <button class="btn btn-outline-secondary password-toggle" 
-                                                        type="button" 
-                                                        id="togglePassword">
+                                                <button class="password-toggle"
+                                                        type="button"
+                                                        id="togglePassword"
+                                                        aria-label="Mostrar u ocultar contraseña">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
                                             </div>
@@ -121,79 +173,78 @@
                                             @enderror
                                         </div>
 
-                                        <!-- Botones con jerarquía mejorada -->
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-primary btn-login">
-                                                <i class="fas fa-sign-in-alt"></i>
-                                                Iniciar Sesión
-                                            </button>
-                                            
-                                            <a href="{{ route('register') }}" class="btn btn-outline-primary btn-register">
-                                                <i class="fas fa-user-plus"></i>
-                                                Crear Cuenta
-                                            </a>
+                                        {{-- CAPTCHA --}}
+                                        <div class="captcha-group">
+                                            <div class="captcha-box"
+                                                 id="captchaBox"
+                                                 role="button"
+                                                 tabindex="0"
+                                                 aria-label="Verificar que no eres un robot">
+                                                <div class="captcha-left">
+                                                    <div class="captcha-checkbox" id="captchaCheckbox">
+                                                        <i class="fas fa-check" id="captchaCheckIcon"></i>
+                                                    </div>
+                                                    <span class="captcha-label" id="captchaLabel">No soy un robot</span>
+                                                </div>
+                                                <div class="captcha-right">
+                                                    <div class="captcha-logo">
+                                                        <i class="fas fa-shield-alt"></i>
+                                                    </div>
+                                                    <span class="captcha-brand">reCAPTCHA<br>Privacidad · Condiciones</span>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="captcha_verified" id="captchaVerified" value="0">
                                         </div>
 
-                                        <!-- Enlaces adicionales conservados -->
+                                        {{-- Botón --}}
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn-login" id="submitBtn">
+                                                <i class="fas fa-right-to-bracket"></i>
+                                                Iniciar Sesión
+                                            </button>
+                                        </div>
+
+                                        {{-- ¿Olvidaste tu contraseña? --}}
                                         <div class="additional-links">
                                             <a class="forgot-password-link" href="{{ route('password.request') }}">
                                                 <i class="fas fa-key"></i>
                                                 ¿Olvidaste tu contraseña?
                                             </a>
                                         </div>
+
                                     </form>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+
+                            </div>{{-- /panel-right --}}
+                        </div>{{-- /row --}}
+                    </div>{{-- /login-card --}}
+
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Scripts conservados -->
-    <script>
-        // Toggle para mostrar/ocultar contraseña
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const password = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (password.type === 'password') {
-                password.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                password.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        });
-    </script>
+    </div>{{-- /login-container --}}
 
-    <!-- Scripts para SweetAlert2 conservados -->
+    <script src="{{ asset('js/login.js') }}"></script>
+
     @if (session('status'))
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Usuario Creado',
-                    text: 'Esperando verificación del administrador. {{ session('status') }}',
+                    title: 'Éxito',
+                    text: '{{ session('status') }}',
                     confirmButtonText: 'Entendido',
                     timer: 5000,
                     timerProgressBar: true,
-                    customClass: {
-                        popup: 'swal-custom',
-                        title: 'swal-title',
-                        content: 'swal-text',
-                        confirmButton: 'swal-button'
-                    },
+                    customClass: { popup: 'swal-custom', title: 'swal-title', confirmButton: 'swal-button' },
                     backdrop: true,
                     allowOutsideClick: false
                 });
             });
         </script>
     @endif
-    
+
     @if (session('auth_error'))
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -204,17 +255,13 @@
                     confirmButtonText: 'Intentar de nuevo',
                     timer: 4000,
                     timerProgressBar: true,
-                    customClass: {
-                        popup: 'swal-custom',
-                        title: 'swal-title',
-                        content: 'swal-text',
-                        confirmButton: 'swal-button'
-                    },
+                    customClass: { popup: 'swal-custom', title: 'swal-title', confirmButton: 'swal-button' },
                     backdrop: true,
                     allowOutsideClick: false
                 });
             });
         </script>
     @endif
+
 </body>
 </html>
