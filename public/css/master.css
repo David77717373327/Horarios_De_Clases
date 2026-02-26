@@ -33,13 +33,17 @@ body {
 .main-header {
     position: fixed;
     top: 0;
-    left: 0;
+    left: var(--sidebar-width);        /* empieza después del sidebar */
     right: 0;
     height: var(--header-height);
     background-color: #ffffff;
     border-bottom: 1px solid var(--border-color);
-    z-index: 1050;
-    transition: all 0.3s ease;
+    z-index: 1040;
+    transition: left 0.3s ease;
+}
+
+body.sidebar-collapsed .main-header {
+    left: var(--sidebar-collapsed);
 }
 
 .header-container {
@@ -58,13 +62,9 @@ body {
     gap: 15px;
 }
 
-/* Línea vertical divisora */
+/* Línea vertical divisora — oculta, el borde del sidebar la reemplaza */
 .header-divider-vertical {
-    width: 1px;
-    height: 32px;
-    background-color: var(--border-color);
-    opacity: 0.5;
-    flex-shrink: 0;
+    display: none;
 }
 
 /* Botón hamburguesa */
@@ -99,7 +99,7 @@ body {
 }
 
 .header-logo {
-    height: 42px;
+    height: 50px;
     width: auto;
     flex-shrink: 0;
 }
@@ -116,6 +116,11 @@ body {
     color: var(--primary-black);
     line-height: 1;
     white-space: nowrap;
+}
+
+
+.sidebar-brand .brand-text {
+    justify-content: center;
 }
 
 .brand-subtitle {
@@ -250,11 +255,8 @@ body {
     transform: rotate(180deg);
 }
 
-
-
-
 /* ===================================
-   DROPDOWN USUARIO - SIMÉTRICO
+   DROPDOWN USUARIO
 =================================== */
 .user-dropdown {
     min-width: 280px;
@@ -267,9 +269,6 @@ body {
     margin-top: 10px !important;
 }
 
-
-
-/* Cabecera del dropdown */
 .user-dropdown-header {
     display: flex;
     flex-direction: column;
@@ -282,7 +281,6 @@ body {
     text-align: center;
 }
 
-/* Icono grande en cabecera */
 .user-dropdown-icon {
     font-size: 48px;
     color: #374151;
@@ -328,14 +326,12 @@ body {
     text-align: center;
 }
 
-/* Divisor */
 .user-dropdown-divider {
     height: 1px;
     background-color: #e5e7eb;
     margin: 0;
 }
 
-/* Footer - Cerrar sesión */
 .user-dropdown-footer {
     padding: 8px;
 }
@@ -364,7 +360,6 @@ body {
     font-size: 15px;
 }
 
-/* Dropdown genérico */
 .nav-dropdown {
     background-color: var(--primary-white);
     padding: 10px;
@@ -421,13 +416,74 @@ body {
 .sidebar {
     position: fixed;
     left: 0;
-    top: var(--header-height);
+    top: 0;
     width: var(--sidebar-width);
-    height: calc(100vh - var(--header-height));
+    height: 100vh;
     background-color: #ffffff;
     border-right: 1px solid var(--border-color);
-    z-index: 1040;
+    z-index: 1050;                     /* por encima del header */
     transition: width 0.3s ease;
+    overflow: hidden;                  /* sin scroll aquí, el scroll va dentro */
+    display: flex;
+    flex-direction: column;
+}
+
+body.sidebar-collapsed .sidebar {
+    width: var(--sidebar-collapsed);
+}
+
+/* ===================================
+   SIDEBAR BRAND — sticky arriba, fuera del scroll
+=================================== */
+.sidebar-brand {
+    flex-shrink: 0;                    /* no se encoge, siempre visible */
+    height: var(--header-height);      /* misma altura que el header */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+
+
+
+.sidebar-brand .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+
+
+/* Línea horizontal que se conecta con el border-bottom del header */
+.sidebar-brand-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    flex-shrink: 0;
+}
+
+/* Colapsado: centrar logo, ocultar texto */
+body.sidebar-collapsed .sidebar-brand .brand-text {
+    display: none;
+}
+
+body.sidebar-collapsed .sidebar-brand .logo-container {
+    justify-content: center;
+    padding: 0;
+}
+
+/* ===================================
+   SIDEBAR SCROLL AREA
+   — brand queda fijo arriba, todo lo
+     demás (body + footer) hace scroll
+=================================== */
+.sidebar-scroll {
+    flex: 1;
+    overflow-y: auto;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
@@ -435,63 +491,21 @@ body {
     scrollbar-color: #6d727e #ffffff;
 }
 
-body.sidebar-collapsed .sidebar {
-    width: var(--sidebar-collapsed);
+.sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
 }
 
-.sidebar-header {
-    padding: 15px 20px;
+.sidebar-scroll::-webkit-scrollbar-track {
+    background: #ffffff;
 }
 
-.sidebar-brand {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.sidebar-scroll::-webkit-scrollbar-thumb {
+    background-color: #6b7280;
+    border-radius: 10px;
 }
 
-.sidebar-brand i {
-    font-size: 32px;
-    color: var(--primary-black);
-    min-width: 32px;
-}
-
-.sidebar-brand-text h5 {
-    margin: 0 0 4px 0;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--primary-black);
-    white-space: nowrap;
-}
-
-.sidebar-brand-text p {
-    margin: 0;
-    font-size: 12px;
-    color: var(--primary-black);
-    opacity: 0.6;
-    white-space: nowrap;
-}
-
-body.sidebar-collapsed .sidebar-brand-text {
-    display: none;
-}
-
-/* ===================================
-   HOVER ICONOS SIDEBAR COLAPSADO
-=================================== */
-body.sidebar-collapsed .sidebar .nav-link:hover {
-    background-color: #b0b7c3;
-    border-radius: 6px;
-}
-
-body.sidebar-collapsed .sidebar .nav-dropdown-toggle:hover {
-    background-color: #b0b7c3;
-    border-radius: 6px;
-}
-
-body.sidebar-collapsed .sidebar-footer .sidebar-logout:hover {
-    background-color: #fca5a5 !important;
-    color: #dc2626 !important;
-    border-radius: 6px;
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #6b7280;
 }
 
 /* ===================================
@@ -499,9 +513,12 @@ body.sidebar-collapsed .sidebar-footer .sidebar-logout:hover {
 =================================== */
 .sidebar-body {
     flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
     padding: 20px;
+    overflow-x: hidden;
+}
+
+.sidebar-header {
+    padding: 15px 20px;
 }
 
 .sidebar-user {
@@ -706,6 +723,25 @@ body.sidebar-collapsed .sidebar-footer .sidebar-logout {
 }
 
 /* ===================================
+   HOVER ICONOS SIDEBAR COLAPSADO
+=================================== */
+body.sidebar-collapsed .sidebar .nav-link:hover {
+    background-color: #b0b7c3;
+    border-radius: 6px;
+}
+
+body.sidebar-collapsed .sidebar .nav-dropdown-toggle:hover {
+    background-color: #b0b7c3;
+    border-radius: 6px;
+}
+
+body.sidebar-collapsed .sidebar-footer .sidebar-logout:hover {
+    background-color: #fca5a5 !important;
+    color: #dc2626 !important;
+    border-radius: 6px;
+}
+
+/* ===================================
    MENÚ DESPLEGABLE
 =================================== */
 .nav-item-dropdown {
@@ -835,26 +871,6 @@ body.sidebar-collapsed .main-content {
 }
 
 /* ===================================
-   SCROLLBAR
-=================================== */
-.sidebar::-webkit-scrollbar {
-    width: 4px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: #ffffff;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background-color: #6b7280;
-    border-radius: 10px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background-color: #6b7280;
-}
-
-/* ===================================
    RESPONSIVE
 =================================== */
 @media (max-width: 992px) {
@@ -877,6 +893,15 @@ body.sidebar-collapsed .main-content {
 
     .main-content {
         margin-left: 0;
+    }
+
+    /* En móvil el header ocupa todo el ancho */
+    .main-header {
+        left: 0;
+    }
+
+    body.sidebar-collapsed .main-header {
+        left: 0;
     }
 }
 

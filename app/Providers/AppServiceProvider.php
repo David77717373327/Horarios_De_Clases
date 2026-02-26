@@ -76,11 +76,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RestriccionProfesorRepositoryInterface::class, RestriccionProfesorRepository::class);
         $this->app->bind(RestriccionProfesorServiceInterface::class, RestriccionProfesorService::class);
 
+
         // Horario
         $this->app->bind(HorarioRepositoryInterface::class,          HorarioRepository::class);
         $this->app->bind(HorarioServiceInterface::class,             HorarioService::class);
         $this->app->bind(GeneradorHorarioServiceInterface::class,    GeneradorHorarioService::class);
         $this->app->bind(AutoSchedulerServiceInterface::class,       AutoSchedulerService::class);
+
 
         // Horario List
         $this->app->bind(HorarioListRepositoryInterface::class, HorarioListRepository::class);

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/master.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/niveles.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('styles')
 </head>
@@ -21,28 +21,18 @@
     <header class="main-header">
         <div class="header-container">
 
-            <!-- Sección Izquierda -->
+            <!-- Sección Izquierda: Solo botón hamburguesa -->
             <div class="header-left">
                 <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="header-divider-vertical"></div>
-                <div class="logo-container">
-                    <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="header-logo">
-                    <div class="brand-text">
-                        <h2 class="brand-title">Gimnasio Humanístico</h2>
-                        <span class="brand-subtitle">Gestión Educativa Nieva Huila</span>
-                    </div>
-                </div>
             </div>
 
             <!-- Navegación Central -->
             <nav class="header-navigation">
                 <ul class="nav-menu"></ul>
             </nav>
-
-
-            
 
             <!-- Controles de Usuario -->
             <div class="user-controls">
@@ -76,7 +66,6 @@
 
                         <div class="user-dropdown-divider"></div>
 
-                        <!-- Solo Cerrar Sesión -->
                         <div class="user-dropdown-footer">
                             <a href="#" class="user-dropdown-logout"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -94,6 +83,18 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
+
+        <!-- Logo y Brand DENTRO del sidebar -->
+        <div class="sidebar-brand">
+            <div class="logo-container">
+                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="header-logo">
+                <div class="brand-text">
+                    <h2 class="brand-title">Gimnasio Humanístico</h2>
+                    
+                </div>
+            </div>
+            <div class="sidebar-brand-divider"></div>
+        </div>
 
         <div class="sidebar-body">
             <nav class="sidebar-nav">
