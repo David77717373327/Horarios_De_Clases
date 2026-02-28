@@ -24,7 +24,11 @@
     letter-spacing: 0.07em;
     white-space: nowrap;
    background: #1e40af;
+
+
+   border-right: 1.5px solid white;
 }
+
 
 
 
@@ -39,8 +43,15 @@
     padding: 1rem 1.5rem;
     color: var(--color-text);
     vertical-align: middle;
+    border-right: 1.5px solid var(--color-border-table);
 }
 
+
+
+
+
+
+.table-modern tbody td:last-child { border-right: none; }
 /* Celda con ícono */
 .cell-with-icon { display: flex; align-items: center; gap: 10px; }
 .cell-icon {
@@ -53,7 +64,6 @@
 }
 .cell-title    { display: block; font-size: 0.875rem; font-weight: 600; color: var(--color-text); line-height: 1.2; }
 .cell-subtitle { display: block; font-size: 0.72rem; color: var(--color-text-muted); margin-top: 1px; }
-
 
 
 

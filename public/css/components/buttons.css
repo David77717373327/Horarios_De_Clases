@@ -103,6 +103,13 @@
     color: var(--color-text);
 }
 
+
+
+
+
+
+
+
 /* ── Botones Ícono ────────────────────────────── */
 .btn-icon {
     display: inline-flex;
@@ -119,15 +126,23 @@
 }
 
 /* Azul */
-.btn-icon-blue  { color: var(--color-primary); border-color: var(--color-primary-light); }
+.btn-icon-blue  {
+     color: var(--color-primary);
+    }
+
 .btn-icon-blue:hover { background: var(--color-primary-bg); border-color: var(--color-primary); }
 
 /* Rojo */
-.btn-icon-red   { color: var(--color-danger); border-color: #fecaca; }
+.btn-icon-red   { 
+    color: var(--color-danger);
+    }
 .btn-icon-red:hover { background: var(--color-danger-light); border-color: var(--color-danger); }
 
 /* Verde */
-.btn-icon-green { color: #16a34a; border-color: #bbf7d0; }
+.btn-icon-green {
+     color: #16a34a;
+    }
+    
 .btn-icon-green:hover { background: #f0fdf4; border-color: #16a34a; }
 
 /* Grupo de acciones */
