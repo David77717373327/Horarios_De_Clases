@@ -1,0 +1,137 @@
+/* ============================================================
+   FORMULARIO
+============================================================ */
+.form-label-custom {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.input-wrapper { position: relative; }
+
+.input-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-soft);
+    font-size: 0.82rem;
+    pointer-events: none;
+    transition: color 0.2s;
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 0.6rem 0.875rem 0.6rem 2.2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    background: var(--color-bg-white);
+    border: 1.5px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control-custom::placeholder { color: var(--color-text-soft); font-weight: 400; }
+.form-control-custom:hover  { border-color: var(--color-primary); }
+.form-control-custom:focus  {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+.input-wrapper:focus-within .input-icon { color: var(--color-primary); }
+
+/* Buscador */
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-white);
+    min-width: 240px;
+    margin-top: 2rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-box:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+.search-box-icon {
+    padding: 0 8px 0 12px;
+    color: var(--color-text-soft);
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: color 0.2s;
+}
+.search-box:focus-within .search-box-icon { color: var(--color-primary); }
+.search-box input {
+    border: none;
+    outline: none;
+    padding: 0.6rem 0.75rem 0.6rem 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    background: transparent;
+    width: 100%;
+}
+.search-box input::placeholder { color: var(--color-text-soft); font-weight: 400; }
+
+/* ── Checkbox Grid (selección de asignaturas) ── */
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 0.75rem;
+    background: var(--color-bg-soft);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+/* Scrollbar personalizado para el grid */
+.checkbox-grid::-webkit-scrollbar        { width: 5px; }
+.checkbox-grid::-webkit-scrollbar-track  { background: var(--color-bg-soft); border-radius: 10px; }
+.checkbox-grid::-webkit-scrollbar-thumb  { background: var(--color-border-strong); border-radius: 10px; }
+.checkbox-grid::-webkit-scrollbar-thumb:hover { background: var(--color-text-soft); }
+
+.checkbox-label-grid {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.6rem 0.75rem;
+    background: var(--color-bg-white);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+    margin: 0;
+    user-select: none;
+}
+.checkbox-label-grid:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-bg);
+}
+.checkbox-label-grid:has(input:checked) {
+    border-color: var(--color-primary);
+    background: var(--color-primary-bg);
+}
+.checkbox-label-grid input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--color-primary);
+    flex-shrink: 0;
+    margin: 0;
+}
+.checkbox-label-grid span {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.3;
+}

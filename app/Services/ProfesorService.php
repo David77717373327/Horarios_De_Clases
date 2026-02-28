@@ -53,23 +53,39 @@ class ProfesorService implements ProfesorServiceInterface
         return $profesor->load('asignaturas');
     }
 
+
+
+
+
+
     public function updateProfesor(int $id, array $data): User
-    {
-        Log::info('Intentando actualizar profesor', ['id' => $id]);
+{
+    Log::info('[ProfesorService] updateProfesor START', ['id' => $id, 'data' => $data]);
 
-        $profesor = $this->profesorRepository->findById($id);
-        $this->profesorRepository->update($profesor, ['name' => $data['name']]);
+    Log::info('[ProfesorService] Buscando profesor...');
+    $profesor = $this->profesorRepository->findById($id);
+    Log::info('[ProfesorService] Profesor encontrado', ['id' => $profesor->id]);
 
-        $asignaturas = $data['asignaturas'] ?? [];
-        $this->profesorRepository->syncAsignaturas($profesor, $asignaturas);
+    Log::info('[ProfesorService] Actualizando nombre...');
+    $this->profesorRepository->update($profesor, ['name' => $data['name']]);
+    Log::info('[ProfesorService] Nombre actualizado');
 
-        Log::info('Profesor actualizado correctamente', [
-            'id'                => $profesor->id,
-            'asignaturas_count' => count($asignaturas),
-        ]);
+    $asignaturas = $data['asignaturas'] ?? [];
+    Log::info('[ProfesorService] Sincronizando asignaturas...', ['asignaturas' => $asignaturas]);
+    $this->profesorRepository->syncAsignaturas($profesor, $asignaturas);
+    Log::info('[ProfesorService] Asignaturas sincronizadas');
 
-        return $profesor->fresh('asignaturas');
-    }
+    Log::info('[ProfesorService] Ejecutando fresh()...');
+    $result = $profesor->fresh('asignaturas');
+    Log::info('[ProfesorService] fresh() completado');
+
+    return $result;
+}
+
+
+
+
+
 
     public function asignarAsignaturas(int $id, array $data): User
     {

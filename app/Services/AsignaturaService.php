@@ -6,6 +6,7 @@ use App\Interfaces\Repositories\AsignaturaRepositoryInterface;
 use App\Interfaces\Services\AsignaturaServiceInterface;
 use App\Models\Asignatura;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class AsignaturaService implements AsignaturaServiceInterface
 {
@@ -18,9 +19,20 @@ class AsignaturaService implements AsignaturaServiceInterface
         return $this->asignaturaRepository->getAll();
     }
 
-    public function createAsignatura(array $data): Asignatura
+    /**
+     * Crea múltiples asignaturas en una transacción.
+     * Si una falla, ninguna se guarda.
+     */
+    public function createAsignaturas(array $nombres): int
     {
-        return $this->asignaturaRepository->create($data);
+        return DB::transaction(function () use ($nombres) {
+            $creados = 0;
+            foreach ($nombres as $nombre) {
+                $this->asignaturaRepository->create(['nombre' => $nombre]);
+                $creados++;
+            }
+            return $creados;
+        });
     }
 
     public function updateAsignatura(Asignatura $asignatura, array $data): Asignatura

@@ -1,0 +1,48 @@
+/* ============================================================
+   VARIABLES GLOBALES
+============================================================ */
+:root {
+    --color-primary:        #1e40af;
+    --color-primary-hover:  #1235a5;
+    --color-primary-light:  #dbeafe;
+    --color-primary-bg:     #eff6ff;
+
+    --color-amber:          #d97706;
+    --color-amber-hover:    #b45309;
+    --color-amber-light:    #fef3c7;
+    --color-amber-bg:       #fffbeb;
+    --color-amber-icon-bg:  #d97706;
+
+    --color-danger:         #dc2626;
+    --color-danger-hover:   #b91c1c;
+    --color-danger-light:   #fee2e2;
+    --color-danger-bg:      #fef2f2;
+
+    --color-warning:        #f59e0b;
+    --color-warning-light:  #fffbeb;
+
+    --color-success:        #22c55e;
+    --color-success-light:  #f0fdf4;
+    --color-success-bg:     #dcfce7;
+
+    --color-text:           #111827;
+    --color-text-muted:     #4b5563;
+    --color-text-soft:      #6b7280;
+
+    --color-border:         #7a7b7c;
+    --color-border-strong:  #83868d;
+    --color-border-table:   #9fa2a5;
+
+    --color-bg-page:        #f3f4f6;
+    --color-bg-white:       #ffffff;
+    --color-bg-soft:        #f9fafb;
+    --color-bg-hover:       #f0f2f5;
+
+    --radius-sm:    4px;
+    --radius-md:    8px;
+    --radius-lg:    5px;
+
+    --shadow-sm:    0 1px 4px rgba(0,0,0,0.10);
+    --shadow-md:    0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg:    0 8px 24px rgba(0,0,0,0.12);
+}

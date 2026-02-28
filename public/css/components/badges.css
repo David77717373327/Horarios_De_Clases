@@ -1,0 +1,15 @@
+/* ============================================================
+   BADGES
+============================================================ */
+.badge-nivel {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    line-height: 1.3;
+}

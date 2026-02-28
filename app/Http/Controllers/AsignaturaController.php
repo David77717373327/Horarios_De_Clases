@@ -22,12 +22,20 @@ class AsignaturaController extends Controller
     public function store(StoreAsignaturaRequest $request)
     {
         try {
-            $this->asignaturaService->createAsignatura($request->validated());
+            $creados = $this->asignaturaService->createAsignaturas(
+                $request->validated()['nombres']
+            );
+
+            $mensaje = $creados === 1
+                ? 'Asignatura creada exitosamente.'
+                : "{$creados} asignaturas creadas exitosamente.";
+
             return redirect()->route('asignaturas.index')
-                ->with('success', 'Asignatura creada exitosamente.');
+                ->with('success', $mensaje);
+
         } catch (\Exception $e) {
             return redirect()->route('asignaturas.index')
-                ->with('error', 'Error al crear la asignatura: ' . $e->getMessage());
+                ->with('error', 'Error al crear las asignaturas: ' . $e->getMessage());
         }
     }
 

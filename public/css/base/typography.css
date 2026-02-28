@@ -1,0 +1,16 @@
+/* ============================================================
+   TIPOGRAFÍA GENERAL
+============================================================ */
+.page-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.page-subtitle {
+    font-size: 0.975rem;
+    color: var(--color-text-muted);
+    margin: 3px 0 0;
+}

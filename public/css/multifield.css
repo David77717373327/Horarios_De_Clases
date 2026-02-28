@@ -1,0 +1,255 @@
+/* ============================================================
+   MULTI-FIELD PREMIUM — Cards con sombra + ícono de estado
+============================================================ */
+
+/* Cabecera con contador y hint */
+.multi-field-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.multi-field-count {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-primary);
+    background: var(--color-primary-bg);
+    padding: 0.28rem 0.65rem;
+    border-radius: var(--radius-sm);
+}
+.multi-field-hint {
+    font-size: 0.72rem;
+    color: var(--color-text-soft);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.multi-field-hint::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-text-soft);
+    opacity: 0.5;
+}
+
+/* ── Card de cada asignatura ── */
+.multi-field-card {
+    background: var(--color-bg-white);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+    padding: 0.4rem 0.875rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s, opacity 0.2s, transform 0.2s;
+
+    /* entrada animada */
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+}
+.multi-field-card--visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.multi-field-card--removing {
+    opacity: 0;
+    transform: translateX(16px) scale(0.97);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.multi-field-card:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.08), 0 2px 8px rgba(0,0,0,0.06);
+}
+.multi-field-card.is-filled {
+    border-color: #86efac;
+    background: #f0fdf4;
+}
+.multi-field-card.is-filled:focus-within {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+}
+
+/* Número del campo */
+.multi-field-number {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    background: var(--color-bg-soft);
+    border: 1.5px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+.multi-field-card.is-filled .multi-field-number {
+    background: #dcfce7;
+    border-color: #86efac;
+    color: #15803d;
+}
+
+/* Input dentro de la card */
+.multi-field-card .mf-input-wrap {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+}
+.multi-field-card .mf-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-soft);
+    font-size: 0.78rem;
+    pointer-events: none;
+    transition: color 0.2s;
+}
+.multi-field-card:focus-within .mf-icon { color: var(--color-primary); }
+.multi-field-card.is-filled .mf-icon    { color: #22c55e; }
+
+.multi-field-card .mf-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 0.3rem 2rem 0.3rem 1.4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    background: transparent;
+}
+.multi-field-card .mf-input::placeholder {
+    color: var(--color-text-soft);
+    font-weight: 400;
+}
+
+/* Ícono de estado (check) */
+.mf-status-icon {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    opacity: 0;
+    transform: scale(0.6);
+}
+.mf-status-icon.show {
+    opacity: 1;
+    transform: scale(1);
+}
+.mf-status-icon.valid {
+    background: #dcfce7;
+    color: #16a34a;
+}
+.mf-status-icon.duplicate {
+    background: #fef2f2;
+    color: var(--color-danger);
+}
+
+/* Botón eliminar card */
+.mf-remove-btn {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: var(--radius-md);
+    border: 1.5px solid #fecaca;
+    background: transparent;
+    color: var(--color-danger);
+    font-size: 0.68rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+.mf-remove-btn:hover {
+    background: var(--color-danger-light);
+    border-color: var(--color-danger);
+    opacity: 1;
+}
+
+/* ── Botón agregar ── */
+.btn-add-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    margin-top: 4px;
+    background: transparent;
+    border: 1.5px dashed var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-add-field:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-bg);
+    box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+}
+.btn-add-field i { font-size: 0.85rem; }
+
+/* ── Separador con texto ── */
+.mf-separator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0.5rem 0 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-text-soft);
+}
+.mf-separator::before,
+.mf-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+/* ── Resumen en el footer ── */
+.mf-summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 0.75rem;
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: 0.875rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    transition: all 0.2s;
+}
+.mf-summary.has-items {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #15803d;
+}
+.mf-summary i { font-size: 0.8rem; }
+
+/* flex helpers */
+.flex-1 { flex: 1; min-width: 0; }

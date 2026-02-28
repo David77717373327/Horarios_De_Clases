@@ -1,0 +1,72 @@
+/* ============================================================
+   ALERTAS — ESTILO PRELINE
+============================================================ */
+.alert-preline {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+    animation: alertIn 0.3s ease;
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+    max-height: 300px;
+}
+.alert-preline.hiding {
+    max-height: 0; opacity: 0;
+    padding-top: 0; padding-bottom: 0; margin-bottom: 0;
+}
+
+.alert-preline-success {
+    background: #f0fdfa;
+    border-top: 2px solid #14b8a6;
+}
+.alert-preline-error {
+    background: #fef2f2;
+    border-left: 4px solid #ef4444;
+}
+
+.alert-preline-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 50%;
+    border: 3px solid;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.alert-preline-icon-success { border-color: #99f6e4; background: #ccfbf1; color: #0f766e; }
+.alert-preline-icon-error   { border-color: #fecaca; background: #fee2e2; color: #b91c1c; }
+
+.alert-preline-svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.alert-preline-body { flex: 1; min-width: 0; }
+.alert-preline-title {
+    font-size: 0.875rem; font-weight: 700;
+    color: var(--color-text); margin: 0 0 2px; line-height: 1.3;
+}
+.alert-preline-msg {
+    font-size: 0.82rem; color: var(--color-text-muted); margin: 0; line-height: 1.5;
+}
+.alert-preline-list {
+    font-size: 0.82rem; color: var(--color-text-muted);
+    margin: 4px 0 0; padding-left: 1.2rem; line-height: 1.65;
+}
+
+.alert-preline-close {
+    background: none; border: none;
+    font-size: 0.78rem; color: var(--color-text-soft);
+    cursor: pointer; padding: 2px 4px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0; margin-top: 1px;
+    transition: color 0.2s, background 0.2s; line-height: 1;
+}
+.alert-preline-close:hover { color: var(--color-text); background: rgba(0,0,0,0.06); }
+
+@keyframes alertIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

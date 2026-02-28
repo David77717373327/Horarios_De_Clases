@@ -1,0 +1,51 @@
+/* ============================================================
+   CARD PANEL
+============================================================ */
+.card-panel {
+    background: var(--color-bg-white);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+.card-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem 1.25rem;
+    border-bottom: 1.5px solid var(--color-border);
+    background: var(--color-bg-soft);
+}
+.card-panel-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* Variantes de color para íconos en offcanvas */
+.oc-icon-blue  { background: var(--color-primary); }
+.oc-icon-amber { background: var(--color-amber-icon-bg); }
+.oc-icon-red   { background: var(--color-danger); }
+.oc-icon-green { background: #16a34a; }
+
+.card-panel-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.2;
+}
+.card-panel-subtitle {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin: 2px 0 0;
+    line-height: 1;
+}
+.card-panel-body { padding: 1.25rem; }
