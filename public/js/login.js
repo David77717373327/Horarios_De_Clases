@@ -12,21 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const dots       = document.querySelectorAll('.dot');
     let current      = 0;
     let autoInterval = null;
-    const DELAY      = 3500; // ms entre slides
+    const DELAY      = 3500;
 
     function goToSlide(next) {
         if (next === current || slides.length === 0) return;
 
-        // Salida del slide actual
         slides[current].classList.add('exit');
         slides[current].classList.remove('active');
         dots[current]?.classList.remove('active');
 
-        // Limpiar clase exit tras la animación
         const exiting = slides[current];
         setTimeout(() => exiting.classList.remove('exit'), 650);
 
-        // Entrada del nuevo slide
         current = next;
         slides[current].classList.add('active');
         dots[current]?.classList.add('active');
@@ -48,16 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
     }
 
-    // Puntos de navegación
     dots.forEach((dot, i) => {
         dot.addEventListener('click', () => {
             goToSlide(i);
             stopAuto();
-            startAuto(); // reinicia el timer al hacer clic
+            startAuto();
         });
     });
 
-    // Swipe táctil en el carrusel
     const carousel = document.querySelector('.carousel-3d');
     if (carousel) {
         let touchStartX = 0;
@@ -79,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    // Iniciar carrusel
     startAuto();
 
     /* ─────────────────────────────────────────
@@ -93,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const hidden = passwordInp.type === 'password';
             passwordInp.type = hidden ? 'text' : 'password';
             const icon = toggleBtn.querySelector('i');
-            icon.classList.toggle('fa-eye',       !hidden);
+            icon.classList.toggle('fa-eye',      !hidden);
             icon.classList.toggle('fa-eye-slash',  hidden);
             toggleBtn.style.transform = 'scale(0.88)';
             setTimeout(() => { toggleBtn.style.transform = ''; }, 150);
@@ -220,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function clearErrors() {
-        document.querySelectorAll('.invalid-feedback').forEach(el => { el.style.display='none'; el.textContent=''; });
+        document.querySelectorAll('.invalid-feedback').forEach(el => { el.style.display = 'none'; el.textContent = ''; });
         document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
     }
 
@@ -251,15 +245,15 @@ document.addEventListener('DOMContentLoaded', () => {
         inp.addEventListener('input', () => {
             inp.classList.remove('is-invalid');
             const fb = inp.closest('.form-group')?.querySelector('.invalid-feedback');
-            if (fb) { fb.style.display='none'; fb.textContent=''; }
+            if (fb) { fb.style.display = 'none'; fb.textContent = ''; }
         });
     });
 
     /* ─────────────────────────────────────────
-       7. ANIMACIÓN ENTRADA ESCALONADA (panel derecho)
+       7. ANIMACIÓN ENTRADA ESCALONADA
     ───────────────────────────────────────── */
     document.querySelectorAll(
-        '.form-group, .captcha-group, .form-actions, .additional-links'
+        '.form-header, .login-header, .form-group, .captcha-group, .form-actions, .additional-links'
     ).forEach((el, i) => {
         el.style.opacity   = '0';
         el.style.transform = 'translateY(16px)';
@@ -267,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
             el.style.opacity    = '1';
             el.style.transform  = 'translateY(0)';
-        }, 180 + i * 90);
+        }, 150 + i * 80);
     });
 
 });

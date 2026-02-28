@@ -13,255 +13,220 @@
 </head>
 <body>
 
-    <div class="login-container">
+<div class="login-container">
 
-        {{-- Fondo de página --}}
-       <div class="login-background"></div>
-       
-        <div class="container-fluid main-wrapper">
-            <div class="row justify-content-center align-items-center min-vh-100">
-                <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-10">
+    <div class="login-background"></div>
 
-                    <div class="login-card">
-                        <div class="row g-0">
+    <div class="main-wrapper">
+        <div class="login-card">
 
-                            {{-- ==============================
-                                 PANEL IZQUIERDO — CARRUSEL 3D
-                            =============================== --}}
-                            <div class="col-md-5 col-sm-12 panel-left p-0">
+            {{-- ==============================
+                 PANEL IZQUIERDO — CARRUSEL 3D
+            =============================== --}}
+            <div class="panel-left">
 
-                                {{-- CARRUSEL DE IMÁGENES 3D --}}
-                                <div class="carousel-3d">
+                <div class="carousel-3d">
 
-                                    {{-- Slide 1 --}}
-                                    <div class="slide-3d active" data-index="0">
-                                        <div class="slide-scene">
-                                            <img src="{{ asset('images/saluditos.png') }}"
-                                                 alt="Escena 1"
-                                                 class="img-3d">
-                                        </div>
-                                    </div>
+                    <div class="slide-3d active" data-index="0">
+                        <div class="slide-scene">
+                            <img src="{{ asset('images/saluditos.png') }}" alt="Escena 1" class="img-3d">
+                        </div>
+                    </div>
 
-                                    {{-- Slide 2 — agrega tus imágenes aquí --}}
-                                    <div class="slide-3d" data-index="1">
-                                        <div class="slide-scene">
-                                            <img src="{{ asset('images/juego.png') }}"
-                                                 alt="Escena 2"
-                                                 class="img-3d">
-                                        </div>
-                                    </div>
+                    <div class="slide-3d" data-index="1">
+                        <div class="slide-scene">
+                            <img src="{{ asset('images/juego.png') }}" alt="Escena 2" class="img-3d">
+                        </div>
+                    </div>
 
-                                    {{-- Slide 3 --}}
-                                    <div class="slide-3d" data-index="2">
-                                        <div class="slide-scene">
-                                            <img src="{{ asset('images/abrazo.png') }}"
-                                                 alt="Escena 3"
-                                                 class="img-3d">
-                                        </div>
-                                    </div>
-
-                                  
-                                    {{-- Para agregar más imágenes, copia este bloque:
-                                    
-                                    --}}
-
-                                </div>
-
-                                {{-- Texto y controles DEBAJO de la imagen --}}
-                                <div class="welcome-content">
-                                    <h1 class="welcome-title">Panel de<br>Administración</h1>
-                                    <p class="welcome-subtitle">Sistema de Gestión Académica</p>
-
-                                    {{-- Puntos de navegación del carrusel --}}
-                                    <div class="carousel-dots" id="carouselDots">
-                                        <button class="dot active" data-target="0" aria-label="Slide 1"></button>
-                                        <button class="dot"        data-target="1" aria-label="Slide 2"></button>
-                                        <button class="dot"        data-target="2" aria-label="Slide 3"></button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-
-
-
-                            {{-- ============================
-                                 PANEL DERECHO — FORMULARIO
-                            ============================= --}}
-                            <div class="col-md-7 col-sm-12 panel-right">
-
-                                <header class="form-header">
-                                    <div class="institution-identity">
-                                        <img src="{{ asset('images/Logo.png') }}"
-                                             alt="Logo institucional"
-                                             class="institution-logo">
-                                        <div class="institution-details">
-                                            <h2 class="institution-name">Gimnasio Humanístico</h2>
-                                            <p class="institution-location">
-                                                <i class="fas fa-map-marker-alt"></i>
-                                                Neiva, Huila
-                                            </p>
-                                        </div>
-                                    </div>
-                                </header>
-
-                                <div class="login-form-container">
-
-                                    <div class="login-header">
-
-
-
-                                        
-
-
-
-                                        <h3 class="login-title">Acceso Administrativo</h3>
-                                        <p class="login-subtitle">Ingresa tus credenciales para continuar</p>
-                                    </div>
-
-                                    <form method="POST" action="{{ route('login') }}" id="loginForm" novalidate>
-                                        @csrf
-
-                                        {{-- Correo --}}
-                                        <div class="form-group">
-                                            <label for="email" class="form-label">Correo Electrónico</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-envelope"></i>
-                                                </span>
-                                                <input id="email"
-                                                       type="text"
-                                                       class="form-control input-field @error('email') is-invalid @enderror"
-                                                       name="email"
-                                                       value="{{ old('email') }}"
-                                                       placeholder="ejemplo@correo.com"
-                                                       required
-                                                       autofocus>
-                                            </div>
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                        {{-- Contraseña --}}
-                                        <div class="form-group">
-                                            <label for="password" class="form-label">Contraseña</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-lock"></i>
-                                                </span>
-                                                <input id="password"
-                                                       type="password"
-                                                       class="form-control input-field @error('password') is-invalid @enderror"
-                                                       name="password"
-                                                       placeholder="Ingresa tu contraseña"
-                                                       required>
-                                                <button class="password-toggle"
-                                                        type="button"
-                                                        id="togglePassword"
-                                                        aria-label="Mostrar u ocultar contraseña">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                            </div>
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                        {{-- CAPTCHA --}}
-                                        <div class="captcha-group">
-                                            <div class="captcha-box"
-                                                 id="captchaBox"
-                                                 role="button"
-                                                 tabindex="0"
-                                                 aria-label="Verificar que no eres un robot">
-                                                <div class="captcha-left">
-                                                    <div class="captcha-checkbox" id="captchaCheckbox">
-                                                        <i class="fas fa-check" id="captchaCheckIcon"></i>
-                                                    </div>
-                                                    <span class="captcha-label" id="captchaLabel">No soy un robot</span>
-                                                </div>
-                                                <div class="captcha-right">
-                                                    <div class="captcha-logo">
-                                                        <i class="fas fa-shield-alt"></i>
-                                                    </div>
-                                                    <span class="captcha-brand">reCAPTCHA<br>Privacidad · Condiciones</span>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="captcha_verified" id="captchaVerified" value="0">
-                                        </div>
-
-                                        {{-- Botón --}}
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn-login" id="submitBtn">
-                                                <i class="fas fa-right-to-bracket"></i>
-                                                Iniciar Sesión
-                                            </button>
-                                        </div>
-
-                                        {{-- ¿Olvidaste tu contraseña? --}}
-                                        <div class="additional-links">
-                                            <a class="forgot-password-link" href="{{ route('password.request') }}">
-                                                <i class="fas fa-key"></i>
-                                                ¿Olvidaste tu contraseña?
-                                            </a>
-                                        </div>
-
-                                    </form>
-                                </div>
-
-                            </div>{{-- /panel-right --}}
-                        </div>{{-- /row --}}
-                    </div>{{-- /login-card --}}
+                    <div class="slide-3d" data-index="2">
+                        <div class="slide-scene">
+                            <img src="{{ asset('images/abrazo.png') }}" alt="Escena 3" class="img-3d">
+                        </div>
+                    </div>
 
                 </div>
+
+                <div class="welcome-content">
+                    <h1 class="welcome-title">Panel de<br>Administración</h1>
+                    <p class="welcome-subtitle">Sistema de Gestión Académica</p>
+                    <div class="carousel-dots" id="carouselDots">
+                        <button class="dot active" data-target="0" aria-label="Slide 1"></button>
+                        <button class="dot"        data-target="1" aria-label="Slide 2"></button>
+                        <button class="dot"        data-target="2" aria-label="Slide 3"></button>
+                    </div>
+                </div>
+
             </div>
-        </div>
 
-    </div>{{-- /login-container --}}
+            {{-- ============================
+                 PANEL DERECHO — FORMULARIO
+            ============================= --}}
+            <div class="panel-right">
 
-    <script src="{{ asset('js/login.js') }}"></script>
+                <div class="panel-right-inner">
 
-    @if (session('status'))
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Éxito',
-                    text: '{{ session('status') }}',
-                    confirmButtonText: 'Entendido',
-                    timer: 5000,
-                    timerProgressBar: true,
-                    customClass: { popup: 'swal-custom', title: 'swal-title', confirmButton: 'swal-button' },
-                    backdrop: true,
-                    allowOutsideClick: false
-                });
+                    {{-- Header institucional --}}
+                    <header class="form-header">
+                        <div class="institution-identity">
+                            <img src="{{ asset('images/Logo.png') }}" alt="Logo institucional" class="institution-logo">
+                            <div class="institution-details">
+                                <h2 class="institution-name">Gimnasio Humanístico</h2>
+                                <p class="institution-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Neiva, Huila
+                                </p>
+                            </div>
+                        </div>
+                    </header>
+
+                    {{-- Título del formulario --}}
+                    <div class="login-header">
+                        <h3 class="login-title">Acceso Administrativo</h3>
+                        <p class="login-subtitle">Ingresa tus credenciales para continuar</p>
+                    </div>
+
+                    {{-- Formulario --}}
+                    <form method="POST" action="{{ route('login') }}" id="loginForm" novalidate>
+                        @csrf
+
+                        {{-- Correo --}}
+                        <div class="form-group">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <input id="email"
+                                       type="text"
+                                       class="form-control input-field @error('email') is-invalid @enderror"
+                                       name="email"
+                                       value="{{ old('email') }}"
+                                       placeholder="ejemplo@correo.com"
+                                       required
+                                       autofocus>
+                            </div>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        {{-- Contraseña --}}
+                        <div class="form-group">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input id="password"
+                                       type="password"
+                                       class="form-control input-field @error('password') is-invalid @enderror"
+                                       name="password"
+                                       placeholder="Ingresa tu contraseña"
+                                       required>
+                                <button class="password-toggle"
+                                        type="button"
+                                        id="togglePassword"
+                                        aria-label="Mostrar u ocultar contraseña">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        {{-- CAPTCHA --}}
+                        <div class="captcha-group">
+                            <div class="captcha-box"
+                                 id="captchaBox"
+                                 role="button"
+                                 tabindex="0"
+                                 aria-label="Verificar que no eres un robot">
+                                <div class="captcha-left">
+                                    <div class="captcha-checkbox" id="captchaCheckbox">
+                                        <i class="fas fa-check" id="captchaCheckIcon"></i>
+                                    </div>
+                                    <span class="captcha-label" id="captchaLabel">No soy un robot</span>
+                                </div>
+                                <div class="captcha-right">
+                                    <div class="captcha-logo">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <span class="captcha-brand">reCAPTCHA<br>Privacidad · Condiciones</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="captcha_verified" id="captchaVerified" value="0">
+                        </div>
+
+                        {{-- Botón --}}
+                        <div class="form-actions">
+                            <button type="submit" class="btn-login" id="submitBtn">
+                                <i class="fas fa-right-to-bracket"></i>
+                                Iniciar Sesión
+                            </button>
+                        </div>
+
+                        {{-- ¿Olvidaste tu contraseña? --}}
+                        <div class="additional-links">
+                            <a class="forgot-password-link" href="{{ route('password.request') }}">
+                                <i class="fas fa-key"></i>
+                                ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>{{-- /panel-right-inner --}}
+
+            </div>{{-- /panel-right --}}
+
+        </div>{{-- /login-card --}}
+    </div>{{-- /main-wrapper --}}
+
+</div>{{-- /login-container --}}
+
+<script src="{{ asset('js/login.js') }}"></script>
+
+@if (session('status'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ session('status') }}',
+                confirmButtonText: 'Entendido',
+                timer: 5000,
+                timerProgressBar: true,
+                customClass: { popup: 'swal-custom', title: 'swal-title', confirmButton: 'swal-button' },
+                backdrop: true,
+                allowOutsideClick: false
             });
-        </script>
-    @endif
+        });
+    </script>
+@endif
 
-    @if (session('auth_error'))
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Acceso Denegado',
-                    text: '{{ session('auth_error') }}',
-                    confirmButtonText: 'Intentar de nuevo',
-                    timer: 4000,
-                    timerProgressBar: true,
-                    customClass: { popup: 'swal-custom', title: 'swal-title', confirmButton: 'swal-button' },
-                    backdrop: true,
-                    allowOutsideClick: false
-                });
+@if (session('auth_error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Acceso Denegado',
+                text: '{{ session('auth_error') }}',
+                confirmButtonText: 'Intentar de nuevo',
+                timer: 4000,
+                timerProgressBar: true,
+                customClass: { popup: 'swal-custom', title: 'swal-title', confirmButton: 'swal-button' },
+                backdrop: true,
+                allowOutsideClick: false
             });
-        </script>
-    @endif
+        });
+    </script>
+@endif
 
 </body>
 </html>

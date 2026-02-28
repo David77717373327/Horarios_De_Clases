@@ -18,16 +18,20 @@
 
     --sombra-card:  0 12px 48px rgba(0,0,0,0.14);
     --sombra-azul:  0 4px 16px rgba(37,99,235,0.30);
-    --tr: all 0.22s ease;
+    --tr:           all 0.22s ease;
 }
 
 /* ============================================
    RESET
    ============================================ */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 /* ============================================
-   BODY — SIN SCROLL
+   BODY
    ============================================ */
 html, body {
     font-family: 'DM Sans', sans-serif;
@@ -39,7 +43,7 @@ html, body {
 }
 
 /* ============================================
-   OCULTAR TEXTO "BACKGROUND"
+   OCULTAR FONDO
    ============================================ */
 .login-background,
 .login-image-container {
@@ -47,7 +51,7 @@ html, body {
 }
 
 /* ============================================
-   CONTENEDOR — FIJO EN PANTALLA
+   CONTENEDOR PRINCIPAL
    ============================================ */
 .login-container {
     position: fixed;
@@ -56,8 +60,8 @@ html, body {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    overflow: hidden;
     background: var(--bg-page);
+    overflow: hidden;
 }
 
 .login-container::before {
@@ -66,17 +70,25 @@ html, body {
     width: 500px; height: 500px;
     background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 65%);
     top: -140px; right: -140px;
-    border-radius: 50%; pointer-events: none; z-index: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
 }
+
 .login-container::after {
     content: '';
     position: absolute;
     width: 380px; height: 380px;
     background: radial-gradient(circle, rgba(37,99,235,0.04) 0%, transparent 65%);
     bottom: -90px; left: -90px;
-    border-radius: 50%; pointer-events: none; z-index: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
 }
 
+/* ============================================
+   WRAPPER
+   ============================================ */
 .main-wrapper {
     position: relative;
     z-index: 10;
@@ -88,21 +100,21 @@ html, body {
    CARD
    ============================================ */
 .login-card {
+    display: flex;
+    flex-direction: row;
     background: var(--blanco);
-    border: none;
     border-radius: 22px;
     box-shadow: var(--sombra-card);
     overflow: hidden;
     height: calc(100vh - 40px);
     max-height: 760px;
     min-height: 560px;
-    display: flex;
     animation: cardEntrance 0.55s cubic-bezier(0.4,0,0.2,1) both;
 }
 
 @keyframes cardEntrance {
-    from { opacity:0; transform:translateY(28px) scale(0.97); }
-    to   { opacity:1; transform:translateY(0)    scale(1);    }
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ============================================
@@ -112,6 +124,9 @@ html, body {
     position: relative;
     display: flex;
     flex-direction: column;
+    width: 42%;
+    flex-shrink: 0;
+    overflow: hidden;
     background: linear-gradient(
         180deg,
         #47a2f7  0%,
@@ -120,31 +135,25 @@ html, body {
         #1260c0  70%,
         #0053fa  100%
     );
-    width: 52%;
-    flex-shrink: 0;
-    overflow: hidden;
 }
 
-.panel-left::before,
-.panel-left::after { display: none; }
-
 /* ============================================
-   CARRUSEL — OCUPA TODO EL ESPACIO VERTICAL
+   CARRUSEL 3D
    ============================================ */
 .carousel-3d {
     position: relative;
-    flex: 1;                /* ← Crece todo lo posible */
+    flex: 1;
     width: 100%;
     overflow: hidden;
     z-index: 2;
-    min-height: 0;          /* necesario para que flex funcione bien */
+    min-height: 0;
 }
 
 .slide-3d {
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: stretch;   /* ← estira el contenido */
+    align-items: stretch;
     justify-content: center;
     opacity: 0;
     transform: translateX(50px) scale(0.95);
@@ -170,53 +179,37 @@ html, body {
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: flex-end;  /* imagen anclada al fondo */
+    align-items: flex-end;
     justify-content: center;
     position: relative;
-    padding: 0;
     overflow: hidden;
 }
 
-/* Sin sombra en el suelo que interfiera con el título */
-.slide-scene::after {
-    display: none;
-}
+.slide-scene::after { display: none; }
 
-/* ============================================
-   IMAGEN — OCUPA TODA LA ALTURA VERTICAL
-   ============================================ */
 .img-3d {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
-
     width: auto;
     height: 92%;
     max-width: 115%;
     object-fit: contain;
     object-position: bottom center;
-
     animation: float3d 3.8s ease-in-out infinite;
-
-    /* Sin sombra — la imagen se ve limpia sin líneas visibles */
     filter: none;
-    transition: filter 0.3s ease;
 }
 
 @keyframes float3d {
-    0%,100% { transform: translateX(-50%) translateY(0px);   }
+    0%,100% { transform: translateX(-50%) translateY(0px); }
     40%      { transform: translateX(-50%) translateY(-14px); }
-    70%      { transform: translateX(-50%) translateY(-7px);  }
-}
-
-.img-3d:hover {
-    filter: none;
+    70%      { transform: translateX(-50%) translateY(-7px); }
 }
 
 /* ============================================
-   TEXTO + PUNTOS — FIJOS AL FONDO DEL PANEL
+   WELCOME CONTENT (título + dots)
    ============================================ */
 .welcome-content {
     position: relative;
@@ -224,12 +217,11 @@ html, body {
     text-align: center;
     padding: 16px 28px 24px;
     flex-shrink: 0;
-    /* Degradado suave de fondo para separar visualmente el título */
     background: linear-gradient(
         to bottom,
         transparent 0%,
-        rgba(0, 60, 200, 0.55) 30%,
-        rgba(0, 50, 180, 0.80) 100%
+        rgba(0,60,200,0.55) 30%,
+        rgba(0,50,180,0.80) 100%
     );
 }
 
@@ -237,8 +229,8 @@ html, body {
     font-family: 'Sora', sans-serif;
     font-size: 26px;
     font-weight: 800;
-    color: #ffffff;          /* blanco limpio sobre el fondo azul */
-    text-shadow: 0 2px 12px rgba(0, 0, 80, 0.50);
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0,0,80,0.50);
     margin-bottom: 4px;
     line-height: 1.2;
 }
@@ -258,9 +250,10 @@ html, body {
 }
 
 .dot {
-    width: 8px; height: 8px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: rgba(247, 247, 247, 0.80);
+    background: rgba(255,255,255,0.50);
     border: none;
     cursor: pointer;
     padding: 0;
@@ -273,39 +266,54 @@ html, body {
     border-radius: 4px;
 }
 
-.dot:hover { background: rgba(37,99,235,0.60); }
+.dot:hover { background: rgba(255,255,255,0.80); }
 
 /* ============================================
-   PANEL DERECHO
+   PANEL DERECHO — contenedor flex centrado
    ============================================ */
 .panel-right {
     flex: 1;
-    padding: 32px 40px;
+    display: flex;
+    align-items: center;       /* centra verticalmente */
+    justify-content: center;   /* centra horizontalmente */
+    padding: 32px 24px;
     background: var(--blanco);
+    overflow-y: auto;
+}
+
+/* ============================================
+   INNER — ancho fijo, todo centrado dentro
+   ============================================ */
+.panel-right-inner {
+    width: 100%;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
+    align-items: stretch;
 }
 
 /* ============================================
    HEADER INSTITUCIONAL
    ============================================ */
-.form-header { margin-bottom: 20px; }
+.form-header {
+    margin-bottom: 24px;
+}
 
 .institution-identity {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding-bottom: 16px;
+    padding-bottom: 18px;
     border-bottom: 1.5px solid var(--gris-200);
 }
 
 .institution-logo {
-    width: 50px; height: 50px;
+    width: 52px;
+    height: 52px;
     object-fit: contain;
     border-radius: 50%;
     border: 2px solid var(--gris-200);
+    flex-shrink: 0;
 }
 
 .institution-name {
@@ -313,7 +321,7 @@ html, body {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--negro);
-    margin: 0 0 3px 0;
+    margin: 0 0 3px;
 }
 
 .institution-location {
@@ -325,48 +333,37 @@ html, body {
     gap: 5px;
 }
 
-.institution-location i { color: var(--azul); font-size: 0.70rem; }
+.institution-location i {
+    color: var(--azul);
+    font-size: 0.70rem;
+}
 
 /* ============================================
-   FORMULARIO
+   LOGIN HEADER (título + subtítulo)
    ============================================ */
-.login-form-container { flex: 0; }
-
 .login-header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
-
-.shield-icon {
-    width: 46px; height: 46px;
-    background: var(--azul);
-    border-radius: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 12px;
-    box-shadow: var(--sombra-azul);
-}
-
-.shield-icon i { font-size: 19px; color: var(--blanco); }
 
 .login-title {
     font-family: 'Sora', sans-serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--negro);
     margin-bottom: 4px;
 }
 
-.login-subtitle { font-size: 13px; color: var(--gris-400); }
+.login-subtitle {
+    font-size: 13px;
+    color: var(--gris-400);
+}
 
 /* ============================================
-   INPUTS
+   GRUPOS DE CAMPOS
    ============================================ */
 .form-group {
-    width: 100%;
-    max-width: 360px;
-    margin: 0 auto 14px auto;
+    margin-bottom: 14px;
 }
 
 .form-label {
@@ -375,9 +372,11 @@ html, body {
     font-weight: 600;
     color: var(--gris-700);
     margin-bottom: 6px;
-    text-align: left;
 }
 
+/* ============================================
+   INPUT GROUP
+   ============================================ */
 .input-group {
     display: flex;
     width: 100%;
@@ -427,7 +426,6 @@ html, body {
 
 .input-field::placeholder { color: var(--gris-400); }
 .input-field.is-invalid   { background: #fff5f5; }
-.input-group.is-invalid   { border-color: #ef4444; }
 
 .password-toggle {
     border: none;
@@ -454,9 +452,7 @@ html, body {
    CAPTCHA
    ============================================ */
 .captcha-group {
-    width: 100%;
-    max-width: 360px;
-    margin: 0 auto 16px auto;
+    margin-bottom: 16px;
 }
 
 .captcha-box {
@@ -473,7 +469,7 @@ html, body {
     user-select: none;
 }
 
-.captcha-box:hover { border-color: var(--azul); background: var(--azul-claro); }
+.captcha-box:hover  { border-color: var(--azul); background: var(--azul-claro); }
 .captcha-box.verified { border-color: #16a34a; background: #f0fdf4; cursor: default; }
 
 .captcha-left { display: flex; align-items: center; gap: 12px; }
@@ -493,8 +489,10 @@ html, body {
 .captcha-checkbox.checked { background: #16a34a; border-color: #16a34a; }
 
 .captcha-checkbox i {
-    font-size: 11px; color: var(--blanco);
-    opacity: 0; transform: scale(0.3);
+    font-size: 11px;
+    color: var(--blanco);
+    opacity: 0;
+    transform: scale(0.3);
     transition: var(--tr);
 }
 
@@ -503,16 +501,21 @@ html, body {
 .captcha-label { font-size: 14px; font-weight: 500; color: var(--gris-700); }
 
 .captcha-right {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
 }
 
-.captcha-logo { font-size: 19px; color: var(--azul); }
+.captcha-logo { font-size: 20px; color: var(--azul); }
 
 .captcha-brand {
-    font-size: 8.5px; color: var(--gris-400);
-    font-weight: 600; letter-spacing: 0.03em;
-    line-height: 1.4; text-align: center;
+    font-size: 8.5px;
+    color: var(--gris-400);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+    text-align: center;
 }
 
 @keyframes girar { to { transform: rotate(360deg); } }
@@ -524,12 +527,10 @@ html, body {
 }
 
 /* ============================================
-   BOTÓN
+   BOTÓN LOGIN
    ============================================ */
 .form-actions {
-    width: 100%;
-    max-width: 360px;
-    margin: 14px auto 0;
+    margin-bottom: 0;
 }
 
 .btn-login {
@@ -559,10 +560,10 @@ html, body {
 }
 
 .btn-login:active  { transform: translateY(0); }
-.btn-login:disabled { opacity:0.6; cursor:not-allowed; transform:none !important; }
+.btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
 
 /* ============================================
-   OLVIDÉ MI CONTRASEÑA
+   ¿OLVIDASTE TU CONTRASEÑA?
    ============================================ */
 .additional-links {
     text-align: center;
@@ -598,29 +599,30 @@ html, body {
 }
 
 @keyframes slideErr {
-    from { opacity:0; transform:translateY(-5px); }
-    to   { opacity:1; transform:translateY(0);    }
+    from { opacity: 0; transform: translateY(-5px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================
    SWEETALERT2
    ============================================ */
-.swal-custom  { border-radius:16px !important; font-family:'DM Sans',sans-serif !important; }
-.swal-title   { color:var(--negro) !important; font-family:'Sora',sans-serif !important; font-weight:700 !important; }
-.swal-text    { color:var(--gris-500) !important; }
-.swal-button  { background:var(--azul) !important; border:none !important; border-radius:9px !important;
-                font-weight:600 !important; padding:11px 24px !important; }
+.swal-custom  { border-radius: 16px !important; font-family: 'DM Sans', sans-serif !important; }
+.swal-title   { color: var(--negro) !important; font-family: 'Sora', sans-serif !important; font-weight: 700 !important; }
+.swal-text    { color: var(--gris-500) !important; }
+.swal-button  { background: var(--azul) !important; border: none !important; border-radius: 9px !important;
+                font-weight: 600 !important; padding: 11px 24px !important; }
 
 /* ============================================
    ACCESIBILIDAD
    ============================================ */
-.btn-login:focus, .captcha-box:focus {
+.btn-login:focus,
+.captcha-box:focus {
     outline: 3px solid rgba(37,99,235,0.3);
     outline-offset: 2px;
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE — TABLET / MÓVIL
    ============================================ */
 @media (max-width: 768px) {
     html, body { overflow: auto; }
@@ -630,35 +632,46 @@ html, body {
         inset: auto;
         min-height: 100vh;
         padding: 16px;
+        align-items: flex-start;
     }
 
     .login-card {
+        flex-direction: column;
         height: auto;
         max-height: none;
-        flex-direction: column;
+        min-height: unset;
     }
 
     .panel-left {
         width: 100%;
-        min-height: 340px;
+        min-height: 280px;
+        flex-direction: column;
     }
 
-    .carousel-3d { flex: none; height: 300px; }
-
-    .img-3d {
-        height: 90%;
+    .carousel-3d {
+        flex: none;
+        height: 240px;
     }
+
+    .img-3d { height: 88%; }
 
     .welcome-title   { font-size: 20px; }
-    .panel-right     { padding: 28px 20px; overflow-y: auto; }
-    .login-title     { font-size: 19px; }
-    .form-group,
-    .captcha-group,
-    .form-actions    { max-width: 100%; }
+    .welcome-content { padding: 14px 20px 20px; }
+
+    .panel-right {
+        padding: 28px 20px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .panel-right-inner {
+        max-width: 100%;
+    }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
     .welcome-title    { font-size: 18px; }
     .institution-name { font-size: 1rem; }
     .btn-login        { font-size: 14px; }
+    .panel-right      { padding: 24px 16px; }
 }
